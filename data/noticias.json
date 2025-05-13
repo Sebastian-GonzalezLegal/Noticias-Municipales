@@ -1,0 +1,18 @@
+[
+  {
+    "titulo": "Corte de luz programado en el barrio San Martín",
+    "cuerpo": "La empresa prestadora informó que este jueves 16 se realizará un corte programado por tareas de mantenimiento.",
+    "fecha": "2025-05-16"
+  },
+  {
+    "titulo": "Nuevo centro de salud en Villa Esperanza",
+    "cuerpo": "El intendente anunció la apertura de un nuevo centro de salud equipado con tecnología de última generación.",
+    "fecha": "2025-05-14"
+  },
+  {
+    "titulo": "Inscripciones abiertas para talleres culturales 2025",
+    "cuerpo": "Desde este lunes comienzan las inscripciones para más de 30 talleres gratuitos que se dictarán en los centros culturales municipales.",
+    "fecha": "2025-05-13",
+    "direccion": "marquez 5149"
+  }
+]

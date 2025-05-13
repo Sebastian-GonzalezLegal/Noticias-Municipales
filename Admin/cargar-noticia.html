@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="css/admin.css">
+    <title>Noticias Muncipales</title>
+</head>
+<body>
+  <h1>Administrador - Crear noticia</h1>
+  <form id="formNoticia">
+    <input type="text" id="titulo" placeholder="Título" required><br>
+    <textarea id="cuerpo" placeholder="Cuerpo de la noticia" required></textarea><br>
+    <input type="date" id="fecha" required><br>
+    <input type="text" id="direccion" placeholder="Dirección" required><br>
+    <button type="submit">Publicar</button>
+  </form>
+
+  <h2>Noticias Publicadas</h2>
+  <div id="listaNoticias"></div>
+
+  <div id="map" style="height: 400px; margin-top: 20px;"></div>
+  <script src="js/admin.js"></script>
+</body>
+</html>
