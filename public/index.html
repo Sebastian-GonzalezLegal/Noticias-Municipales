@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Inicio - Noticias Municipales</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Inicio - Noticias Municipales</title>
 </head>
+
 <body>
-<header>
+  <header>
     <h1>Portal de Noticias Municipales</h1>
-    <nav>
-      <a href="#">Inicio</a>
-      <a href="#">Noticias</a>
-      <a href="#">Mis Preguntas</a>
-      <a href="login.html">Iniciar Sesion</a>
-    </nav>
-</header>
+    <nav id="navPrincipal"></nav>
+  </header>
 
   <div class="contenido">
     <div class="bienvenida">Bienvenido</div>
     <div id="contenedorNoticias">Cargando noticias...</div>
   </div>
 
-<footer>
-    &copy; 2025 Municipio de  - Todos los derechos reservados.
-</footer>
-<script src="js/main.js"></script>
+  <footer>
+    &copy; 2025 Municipio de - Todos los derechos reservados.
+  </footer>
+  <script src="/Admin/js/noticia.js"></script>
+  <script src="/Admin/js/admin.js"></script>
 </body>
+
 </html>

@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel de Administración - Noticias Municipales</title>
-  <link rel="stylesheet" href="css/styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración - Noticias Municipales</title>
+    <link rel="stylesheet" href="css/styles.css" />
 
 </head>
+
 <body>
-  <header>
-    <h1>Panel de Administración</h1>
-    <button id="logoutBtn" onclick="window.location.href='index.html'">Cerrar sesión</button>
-  </header>
+    <header>
+        <h1>Panel de Administración</h1>
+        <button id="logoutBtn" onclick="window.location.href='index.html'">Cerrar sesión</button>
+    </header>
 
-  <main>
-    <section id="noticiasAdmin">
-      <h2>Gestión de Noticias</h2>
-      <button id="crearNoticia">Crear Noticia</button>
-      <div id="listaNoticias">
-        <div class="noticia">
-          <h3>Título de la noticia</h3>
-          <button>Editar</button>
-          <button>Eliminar</button>
-        </div>
-      </div>
-    </section>
+    <main>
+        <section id="noticiasAdmin">
+            <h2>Gestión de Noticias</h2>
+            <button id="crearNoticia">Crear Noticia</button>
+            <div id="listaNoticias">
+                <div class="noticia">
+                    <h3>Título de la noticia</h3>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                </div>
+            </div>
+        </section>
 
-    <section id="preguntasAdmin">
-      <h2>Preguntas de usuarios</h2>
-      <div id="listaPreguntas">
-      </div>
-    </section>
-  </main>
+        <section id="preguntasAdmin">
+            <h2>Preguntas de usuarios</h2>
+            <div id="listaPreguntas">
+            </div>
+        </section>
+    </main>
 
-<script src="js/admin.js"></script>
+    <script src="/Admin/js/admin.js"></script>
 </body>
+
 </html>

@@ -1,27 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <link rel="stylesheet" href="css/admin.css">
-    <title>Noticias Muncipales</title>
+    <title>Crear Noticia - Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
+
 <body>
-  <h1>Administrador - Crear noticia</h1>
-  <form id="formNoticia">
-    <input type="text" id="titulo" placeholder="Título" required><br>
-    <textarea id="cuerpo" placeholder="Cuerpo de la noticia" required></textarea><br>
-    <input type="date" id="fecha" required><br>
-    <input type="text" id="direccion" placeholder="Dirección" required><br>
-    <button type="submit">Publicar</button>
-  </form>
+    <header>
+        <h1>Crear Noticia</h1>
+        <nav>
+            <a href="../public/index.html">Volver al Portal</a>
+        </nav>
+    </header>
+    <main>
+        <form id="formNoticia" enctype="multipart/form-data">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
 
-  <h2>Noticias Publicadas</h2>
-  <div id="listaNoticias"></div>
+            <label for="descripcion">Descripción breve:</label>
+            <input type="text" id="descripcion" name="descripcion" required>
 
-  <div id="map" style="height: 400px; margin-top: 20px;"></div>
-  <script src="js/admin.js"></script>
+            <label for="cuerpo">Cuerpo de la Noticia:</label>
+            <textarea id="cuerpo" name="cuerpo" required></textarea>
+
+            <label for="fechaPublicacion">Fecha de Publicación:</label>
+            <input type="date" id="fechaPublicacion" name="fechaPublicacion" required>
+
+            <label for="tema">Tema:</label>
+            <input type="text" id="tema" name="tema" required>
+
+            <label for="direccion">Dirección (opcional):</label>
+            <input type="text" id="direccion" name="direccion">
+
+            <label for="imagenes">Imágenes (opcional):</label>
+            <input type="file" id="imagenes" name="imagenes" multiple>
+
+            <button type="submit">Guardar Noticia</button>
+        </form>
+        <div id="map"></div>
+    </main>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="js/noticias.js"></script>
 </body>
+
 </html>
