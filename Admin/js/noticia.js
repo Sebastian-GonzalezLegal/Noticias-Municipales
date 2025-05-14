@@ -15,7 +15,6 @@ let mapasInstancias = {};
 document.addEventListener('DOMContentLoaded', function () {
   cargarNoticias();
   mostrarDetalleNoticia();
-  actualizarNavegacion();
 });
 
 function cargarNoticias() {
@@ -176,3 +175,4 @@ function mostrarDetalleNoticia() {
     }, 300);
   }
 }
+

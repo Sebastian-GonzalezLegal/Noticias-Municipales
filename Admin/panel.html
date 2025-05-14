@@ -14,13 +14,14 @@
 <body>
     <header>
         <h1>Panel de Administración</h1>
-        <div class="header-buttons">
-            <button id="btnCrearNoticia">Crear Noticia</button>
+        <nav>
+            <a href="../public/index.html">Volver al Portal</a>
+            <button id="btnCrearNoticia"onclick="window.location.href='cargar-noticia.html'" display = "none">Crear Noticia</button>
             <button id="btnGestionarPreguntas" onclick="window.location.href='moderar-preguntas.html'">
                 Gestionar Preguntas de Usuarios
             </button>
             <button id="logoutBtn" onclick="cerrarSesion()">Cerrar sesión</button>
-        </div>
+        </nav>
     </header>
 
     <main>

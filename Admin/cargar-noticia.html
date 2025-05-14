@@ -13,6 +13,11 @@
         <h1>Crear Noticia</h1>
         <nav>
             <a href="../public/index.html">Volver al Portal</a>
+            <button id="btnCrearNoticia"onclick="window.location.href='cargar-noticia.html'" display = "none">Crear Noticia</button>
+            <button id="btnGestionarPreguntas" onclick="window.location.href='moderar-preguntas.html'">
+                Gestionar Preguntas de Usuarios
+            </button>
+            <button id="logoutBtn" onclick="cerrarSesion()">Cerrar sesión</button>
         </nav>
     </header>
     <main>
@@ -43,7 +48,7 @@
         <div id="map"></div>
     </main>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="js/noticias.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 
 </html>
