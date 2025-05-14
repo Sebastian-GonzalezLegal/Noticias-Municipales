@@ -176,3 +176,42 @@ function mostrarDetalleNoticia() {
   }
 }
 
+document.getElementById('formPregunta').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const noticia = JSON.parse(localStorage.getItem('noticiaSeleccionada'));
+  const mensaje = document.getElementById('pregunta').value.trim();
+  if (!mensaje) return;
+
+  const pregunta = {
+    mensaje,
+    fecha: new Date().toISOString(),
+    idNoticia: noticia.titulo,
+    estado: "pendiente"
+  };
+
+  guardarPregunta(pregunta);
+
+  document.getElementById('mensajeConfirmacion').innerText = "¡Gracias! Tu pregunta fue enviada.";
+  this.reset();
+});
+
+function guardarPregunta(pregunta) {
+  fetch('http://localhost:3000/api/preguntas', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(pregunta)
+  })
+  .then(res => {
+    if (!res.ok) throw new Error("Error al guardar la pregunta");
+    return res.json();
+  })
+  .then(data => {
+    alert(data.mensaje);
+  })
+  .catch(error => {
+    console.error(error);
+    alert("Ocurrió un error al guardar la pregunta");
+  });
+}

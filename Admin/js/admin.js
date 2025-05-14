@@ -2,11 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
   mostrarNoticias();
   actualizarNavegacion();
 
-  document.getElementById('btnCrearNoticia').addEventListener('click', function () {
-    let seccionCrear = document.getElementById('crearNoticiaSection');
-    seccionCrear.style.display = (seccionCrear.style.display === 'none' || seccionCrear.style.display === '') ? 'block' : 'none';
-  });
-
   const formNoticia = document.getElementById('formNoticia');
   if (formNoticia) {
     formNoticia.addEventListener('submit', guardarNoticia);
