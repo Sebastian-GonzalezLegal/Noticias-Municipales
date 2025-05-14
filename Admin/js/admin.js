@@ -20,26 +20,33 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-function actualizarNavegacion() {
-  const navPrincipal = document.getElementById('navPrincipal');
-  if (!navPrincipal) return;
+document.addEventListener('DOMContentLoaded', function () {
+  function actualizarNavegacion() {
+    const navPrincipal = document.getElementById('navPrincipal');
+    if (!navPrincipal) {
+      console.error('No se encontró el elemento con id "navPrincipal"');
+      return;
+    }
 
-  const rol = localStorage.getItem('rol'); // 'admin' o 'usuario'
+    const rol = localStorage.getItem('rol');
 
-  if (rol === 'admin') {
-    navPrincipal.innerHTML = `
-      <a href="/Admin/panel.html">Panel de Administración</a> |
-      <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
-    `;
-  } else if (rol === 'usuario') {
-    navPrincipal.innerHTML = `
-      <a href="mis-preguntas.html">Mis Preguntas</a> |
-      <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
-    `;
-  } else {
-    navPrincipal.innerHTML = `<a href="login.html">Login</a>`;
+    if (rol === 'admin') {
+      navPrincipal.innerHTML = `
+        <a href="/Admin/panel.html">Panel de Administración</a> |
+        <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
+      `;
+    } else if (rol === 'usuario') {
+      navPrincipal.innerHTML = `
+        <a href="mis-preguntas.html">Mis Preguntas</a> |
+        <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
+      `;
+    } else {
+      navPrincipal.innerHTML = `<a href="login.html">Login</a>`;
+    }
   }
-}
+
+  actualizarNavegacion();
+});
 
 function cerrarSesion() {
   localStorage.removeItem('usuario');
@@ -84,10 +91,13 @@ function mostrarNoticias() {
               </div>`;
     if (noticia.ubicacion) {
       html += `<div class="ubicacion">
-                 <button onclick="mostrarMapa(${noticia.ubicacion.lat}, ${noticia.ubicacion.lng}, '${noticia.ubicacion.direccion_normalizada}', ${indice})">
-                   Ver en el mapa
-                 </button>
-               </div>`;
+                <button onclick="mostrarMapa(${noticia.ubicacion.lat}, ${noticia.ubicacion.lng}, '${noticia.ubicacion.direccion_normalizada}', ${indice})">Ver en el mapa</button>
+                <div id="contenedorMapa_${indice}" class="contenedor-mapa" style="height: 300px; margin-top: 10px; display: none;"></div>
+              </div>`;
+    } else {
+      html += `<div class="ubicacion">
+                <p>Sin ubicación asignada</p>
+              </div>`;
     }
     html += `</div><hr>`;
   });
@@ -172,11 +182,38 @@ function almacenarNoticia(noticia) {
   mostrarNoticias();
 }
 
+let mapasInstancias = {};
+
 function mostrarMapa(lat, lng, direccionNormalizada, indice) {
-  window.mapa.setView([lat, lng], 15);
-  L.marker([lat, lng]).addTo(window.mapa)
-    .bindPopup(`<b>${obtenerNoticias()[indice].titulo}</b><br>${direccionNormalizada}`)
-    .openPopup();
+  const contenedorMapaId = `contenedorMapa_${indice}`;
+  const contenedorMapa = document.getElementById(contenedorMapaId);
+
+  if (contenedorMapa.style.display === 'none') {
+    contenedorMapa.style.display = 'block';
+
+    if (mapasInstancias[indice]) {
+      mapasInstancias[indice].remove();
+      delete mapasInstancias[indice];
+    }
+
+    mapasInstancias[indice] = L.map(contenedorMapaId).setView([lat, lng], 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(mapasInstancias[indice]);
+
+    const noticia = obtenerNoticias()[indice];
+    L.marker([lat, lng]).addTo(mapasInstancias[indice])
+      .bindPopup(`<b>${noticia.titulo}</b><br>${direccionNormalizada}`)
+      .openPopup();
+  } else {
+    contenedorMapa.style.display = 'none';
+
+    if (mapasInstancias[indice]) {
+      mapasInstancias[indice].remove();
+      delete mapasInstancias[indice];
+    }
+  }
 }
 
 function editarNoticia(indice) {
