@@ -7,49 +7,75 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
-    <header class="headerAdmin">
-        <h1>Panel de Administración</h1>
-        <nav class="navbar">
-            <div class="nav-brand"></div>
-            <a href="panel.html">Volver al Panel</a>
-            <button class="nav-toggle" id="nav-toggle">☰</button>
-            <div class="nav-links" id="navAdmin">
-            <button class="btnAdmin"onclick="window.location.href='moderar-preguntas.html'">Gestionar Preguntas de Usuarios</button>
+<header class="headerAdmin">
+    <h1>Panel de Administración</h1>
+    <nav class="navbar">
+        <div class="nav-brand"></div>
+        <a href="panel.html">Volver al Panel</a>
+        <a href="/public/index.html">Volver al Portal</a>
+        <button class="nav-toggle" id="nav-toggle">☰</button>
+        <div class="nav-links" id="navAdmin">
+            <button class="btnAdmin" onclick="window.location.href='moderar-preguntas.html'">Gestionar Preguntas de
+                Usuarios</button>
             <button class="btnAdmin" onclick="cerrarSesion()">Cerrar sesión</button>
-            </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
 <body>
 
     <main>
-        <form id="formNoticia" enctype="multipart/form-data">
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
+        <form id="formNoticia">
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" required>
+            </div>
 
-            <label for="descripcion">Descripción breve:</label>
-            <input type="text" id="descripcion" name="descripcion" required>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" rows="2"></textarea>
+            </div>
 
-            <label for="cuerpo">Cuerpo de la Noticia:</label>
-            <textarea id="cuerpo" name="cuerpo" required></textarea>
+            <div class="form-group">
+                <label for="cuerpo">Cuerpo de la noticia:</label>
+                <textarea id="cuerpo" rows="6" required></textarea>
+            </div>
 
-            <label for="fechaPublicacion">Fecha de Publicación:</label>
-            <input type="date" id="fechaPublicacion" name="fechaPublicacion" required>
+            <div class="form-group">
+                <label for="fechaPublicacion">Fecha de publicación:</label>
+                <input type="date" id="fechaPublicacion">
+            </div>
 
-            <label for="tema">Tema:</label>
-            <input type="text" id="tema" name="tema" required>
+            <div class="form-group">
+                <label for="tema">Tema:</label>
+                <select id="tema">
+                    <option value="general">General</option>
+                    <option value="politica">Política</option>
+                    <option value="economia">Economía</option>
+                    <option value="deportes">Deportes</option>
+                    <option value="cultura">Cultura</option>
+                    <option value="tecnologia">Tecnología</option>
+                </select>
+            </div>
 
-            <label for="direccion">Dirección (opcional):</label>
-            <input type="text" id="direccion" name="direccion">
+            <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" placeholder="Ej: Av. Rivadavia 3100, Buenos Aires">
+            </div>
 
-            <label for="imagenes">Imágenes (opcional):</label>
-            <input type="file" id="imagenes" name="imagenes" multiple>
+            <div class="form-group">
+                <label for="imagenes">Imágenes:</label>
+                <input type="file" id="imagenes" multiple accept="image/*">
+                <small>Puede seleccionar múltiples imágenes</small>
+                <div id="imagenes-existentes"></div>
+            </div>
 
-            <button type="submit">Guardar Noticia</button>
+            <button type="submit" class="btn">Guardar Noticia</button>
         </form>
         <div id="map"></div>
     </main>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="js/admin.js"></script>
+    <script type="module" src="js/admin.js"></script>
 </body>
 
 </html>
