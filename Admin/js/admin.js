@@ -19,27 +19,53 @@ function actualizarNavegacion() {
   const navPrincipal = document.getElementById('navPrincipal');
   if (!navPrincipal) return;
 
-  const rol = localStorage.getItem('rol'); // 'admin' o 'usuario'
+  const rol = localStorage.getItem('rol'); // 'admin', 'usuario' o null
+
+  let contenido = '';
 
   if (rol === 'admin') {
-    navPrincipal.innerHTML = `
-      <a href="/Admin/panel.html">Panel de Administración</a> |
+    contenido = `
+      <a href="/Admin/panel.html">Panel de Administración</a>
       <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
     `;
   } else if (rol === 'usuario') {
-    navPrincipal.innerHTML = `
-      <a href="mis-preguntas.html">Mis Preguntas</a> |
+    contenido = `
+      <a href="mis-preguntas.html">Mis Preguntas</a>
       <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
     `;
   } else {
-    navPrincipal.innerHTML = `<a href="login.html">Login</a>`;
+    contenido = `<a href="login.html">Login</a>`;
   }
+
+  navPrincipal.innerHTML = contenido;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  actualizarNavegacion();
+
+  const toggleBtn = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("navPrincipal");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  actualizarNavegacion();
+
+  const toggleBtn = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("navAdmin");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
+
+
 function cerrarSesion() {
-  localStorage.removeItem('usuario');
   localStorage.removeItem('rol');
-  window.location.href = "/public/index.html";
+  location.href = 'login.html';
 }
 
 function obtenerNoticias() {

@@ -15,11 +15,18 @@
 <body>
   <header>
     <h1>Portal de Noticias Municipales</h1>
-    <nav id="navPrincipal"></nav>
+    <nav class="navbar">
+      <div class="nav-brand"></div>
+      <button class="nav-toggle" id="nav-toggle">☰</button>
+      <div class="nav-links" id="navPrincipal">
+      <!-- Links se insertan dinámicamente -->
+      </div>
+    </nav>
+
   </header>
 
   <div class="contenido">
-    <div class="bienvenida">Bienvenido</div>
+    <!--<div class="bienvenida">Bienvenido</div>-->
     <div id="contenedorNoticias">Cargando noticias...</div>
   </div>
 

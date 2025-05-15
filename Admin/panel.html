@@ -12,15 +12,17 @@
 </head>
 
 <body>
-    <header>
+    <header class="headerAdmin">
         <h1>Panel de Administración</h1>
-        <nav>
+        <nav class="navbar">
+            <div class="nav-brand"></div>
             <a href="../public/index.html">Volver al Portal</a>
-            <button id="btnCrearNoticia" onclick="window.location.href='cargar-noticia.html'">Crear Noticia</button>
-            <button id="btnGestionarPreguntas" onclick="window.location.href='moderar-preguntas.html'">
-                Gestionar Preguntas de Usuarios
-            </button>
-            <button id="logoutBtn" onclick="cerrarSesion()">Cerrar sesión</button>
+            <button class="nav-toggle" id="nav-toggle">☰</button>
+            <div class="nav-links" id="navAdmin">
+            <button class="btnAdmin" onclick="window.location.href='cargar-noticia.html'">Crear Noticia</button>
+            <button class="btnAdmin"onclick="window.location.href='moderar-preguntas.html'">Gestionar Preguntas de Usuarios</button>
+            <button class="btnAdmin" onclick="cerrarSesion()">Cerrar sesión</button>
+            </div>
         </nav>
     </header>
 

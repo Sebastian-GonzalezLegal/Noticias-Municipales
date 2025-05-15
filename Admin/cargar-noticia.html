@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
 </head>
-
-<body>
-    <header>
-        <h1>Crear Noticia</h1>
-        <nav>
-            <a href="../public/index.html">Volver al Portal</a>
-            <button id="btnVolverPanel" onclick="window.location.href='panel.html'">Volver al Panel de Administración</button>
-            <button id="btnGestionarPreguntas" onclick="window.location.href='moderar-preguntas.html'">
-                Gestionar Preguntas de Usuarios
-            </button>
-            <button id="logoutBtn" onclick="cerrarSesion()">Cerrar sesión</button>
+    <header class="headerAdmin">
+        <h1>Panel de Administración</h1>
+        <nav class="navbar">
+            <div class="nav-brand"></div>
+            <a href="panel.html">Volver al Panel</a>
+            <button class="nav-toggle" id="nav-toggle">☰</button>
+            <div class="nav-links" id="navAdmin">
+            <button class="btnAdmin"onclick="window.location.href='moderar-preguntas.html'">Gestionar Preguntas de Usuarios</button>
+            <button class="btnAdmin" onclick="cerrarSesion()">Cerrar sesión</button>
+            </div>
         </nav>
     </header>
+<body>
+
     <main>
         <form id="formNoticia" enctype="multipart/form-data">
             <label for="titulo">Título:</label>

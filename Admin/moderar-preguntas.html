@@ -8,11 +8,16 @@
 </head>
 
 <body>
-    <header>
-        <h1>Moderación de Preguntas</h1>
-        <nav>
+        <header class="headerAdmin">
+        <h1>Panel de Administración</h1>
+        <nav class="navbar">
+            <div class="nav-brand"></div>
             <a href="panel.html">Volver al Panel</a>
-            <button id="logoutBtn" onclick="cerrarSesion()">Cerrar sesión</button>
+            <button class="nav-toggle" id="nav-toggle">☰</button>
+            <div class="nav-links" id="navAdmin">
+            <button class="btnAdmin" onclick="window.location.href='cargar-noticia.html'">Crear Noticia</button>
+            <button class="btnAdmin" onclick="cerrarSesion()">Cerrar sesión</button>
+            </div>
         </nav>
     </header>
     <main>
@@ -23,6 +28,7 @@
         </section>
     </main>
     <script src="js/moderarPreguntas.js"></script>
+    <script src="js/admin.js"></script>
 </body>
 
 </html>

@@ -64,7 +64,7 @@ function mostrarListaNoticias(noticias, contenedor) {
       <p>${noticia.descripcion || noticia.cuerpo.slice(0, 100)}...</p>
     `;
 
-    if (noticia.ubicacion) {
+   /* if (noticia.ubicacion) {
       const mapaContainer = document.createElement('div');
       mapaContainer.className = 'mapa-container';
 
@@ -73,7 +73,7 @@ function mostrarListaNoticias(noticias, contenedor) {
       botonMapa.className = 'btn-mapa';
 
       const contenedorMapa = document.createElement('div');
-      contenedorMapa.id = `mapa_inicio_${indice}`;
+      contenedorMapa.id = `mapa_inicio_${i ndice}`;
       contenedorMapa.className = 'contenedor-mapa';
       contenedorMapa.style.height = '250px';
       contenedorMapa.style.display = 'none';
@@ -86,7 +86,7 @@ function mostrarListaNoticias(noticias, contenedor) {
       botonMapa.addEventListener('click', function () {
         toggleMapa(noticia, indice);
       });
-    }
+    } */
 
     div.querySelector('h2').addEventListener('click', () => {
       localStorage.setItem('noticiaSeleccionada', JSON.stringify(noticia));
