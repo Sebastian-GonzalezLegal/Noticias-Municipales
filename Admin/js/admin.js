@@ -2,11 +2,8 @@ import { obtenerNoticias, obtenerCoordenadasUSIG, cerrarSesion } from './utils.j
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  verificarAdmin();
   mostrarNoticias();
   actualizarNavegacion();
-  inicializarFormularioNoticia();
-  inicializarMapa();
 });
 
 
@@ -41,7 +38,8 @@ function actualizarNavegacion() {
       <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
     `;
   } else {
-    contenido = `<a href="login.html">Login</a>`;
+    contenido = `<a href="login.html">Login</a>
+    <a href="register.html">Register</a>`;
   }
 
   navPrincipal.innerHTML = contenido;
@@ -199,7 +197,7 @@ function guardarNoticia(event) {
         });
     } else {
       almacenarNoticia(noticia);
-    }
+    }dw
   };
 
   if (inputImagenes && inputImagenes.files && inputImagenes.files.length > 0) {

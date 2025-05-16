@@ -16,5 +16,11 @@
     "index": 3,
     "respuesta": "prueba",
     "fechaRespuesta": "16/5/2025, 12:46:43"
+  },
+  {
+    "mensaje": "hola",
+    "fecha": "2025-05-16T17:56:50.081Z",
+    "idNoticia": "Inscripciones abiertas para talleres culturales 2025",
+    "estado": "Pendiente"
   }
 ]

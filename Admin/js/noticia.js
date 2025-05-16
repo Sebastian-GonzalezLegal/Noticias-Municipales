@@ -282,3 +282,13 @@ function mostrarDetalleNoticia() {
 window.cerrarSesion = cerrarSesion;
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const rol = localStorage.getItem("rol");
+  const preguntasSection = document.getElementById("preguntas");
+
+  if (rol === "usuario" || rol === "admin") {
+    preguntasSection.style.display = "block";
+  }
+});
+
+

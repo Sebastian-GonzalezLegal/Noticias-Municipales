@@ -107,6 +107,82 @@ app.delete('/api/preguntas/:index', (req, res) => {
   });
 });
 
+app.post('/api/usuarios', (req, res) => {
+  const USERS_FILE = path.join(__dirname, 'data', 'usuarios.json');
+  const { name, email, dni, username, password } = req.body;
+
+  if (!name || !email || !dni || !username || !password) {
+    return res.status(400).json({ error: "Todos los campos son obligatorios." });
+  }
+
+  // Leer usuarios existentes
+  let usuarios = [];
+  try {
+    usuarios = JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
+  } catch (error) {
+    console.error("Error leyendo usuarios.json:", error);
+  }
+
+  // Verificar si el username ya existe
+  const yaExisteUser = usuarios.find(u => u.username === username);
+  if (yaExisteUser) {
+    return res.status(400).json({ error: "El nombre de usuario ya está registrado." });
+  }
+  // Verificar si el dni ya existe
+  const yaExisteDni = usuarios.find(u => u.dni === dni);
+  if (yaExisteDni) {
+    return res.status(400).json({ error: "El dni ya está registrado." });
+  }
+  // Verificar si el email ya existe
+  const yaExisteEmail = usuarios.find(u => u.email === email);
+  if (yaExisteEmail) {
+    return res.status(400).json({ error: "El Correo electronico ya está registrado." });
+  }
+
+  const nuevoUsuario = {
+    name,
+    email,
+    dni,
+    username,
+    password,
+    rol: "usuario"
+  };
+
+  usuarios.push(nuevoUsuario);
+  fs.writeFileSync(USERS_FILE, JSON.stringify(usuarios, null, 2));
+
+  res.json({ mensaje: "Usuario registrado correctamente." });
+});
+
+app.post('/api/login', (req, res) => {
+  const USERS_FILE = path.join(__dirname, 'data', 'usuarios.json');
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: "Faltan credenciales." });
+  }
+
+  // Caso especial: admin hardcodeado
+  if (username === 'admin' && password === 'admin') {
+    return res.json({ mensaje: "Login admin exitoso", rol: "admin", username: "admin" });
+  }
+
+  let usuarios = [];
+  try {
+    usuarios = JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
+  } catch (error) {
+    console.error("Error leyendo usuarios.json:", error);
+  }
+
+  const usuario = usuarios.find(u => u.username === username && u.password === password);
+
+  if (!usuario) {
+    return res.status(401).json({ error: "Usuario o contraseña incorrectos." });
+  }
+
+  res.json({ mensaje: "Login exitoso", rol: usuario.rol, username: usuario.username });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${3000}`);
 });

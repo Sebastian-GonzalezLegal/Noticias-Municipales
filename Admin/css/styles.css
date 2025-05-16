@@ -493,3 +493,7 @@ form button {
   transform: scale(1.05);
   box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
+
+#preguntas {
+  display: none;
+}
