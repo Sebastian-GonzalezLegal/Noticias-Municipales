@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         mensaje,
         fecha: new Date().toISOString(),
         idNoticia: noticia.titulo,
-        estado: "pendiente"
+        estado: "Pendiente"
       };
 
       guardarPregunta(pregunta);

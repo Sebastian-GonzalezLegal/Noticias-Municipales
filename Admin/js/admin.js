@@ -45,16 +45,27 @@ function actualizarNavegacion() {
   }
 
   navPrincipal.innerHTML = contenido;
-
-  const toggleBtn = document.getElementById("nav-toggle");
-  const navLinks = document.getElementById("navPrincipal") || document.getElementById("navAdmin");
-
-  if (toggleBtn && navLinks) {
-    toggleBtn.addEventListener("click", () => {
-      navLinks.classList.toggle("show");
-    });
-  }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  actualizarNavegacion();
+  const toggleBtn = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("navPrincipal");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  actualizarNavegacion();
+  const toggleBtn = document.getElementById("nav-toggle-admin");
+  const navLinks = document.getElementById("navAdmin");
+
+  toggleBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+});
 
 function inicializarFormularioNoticia() {
   const formNoticia = document.getElementById('formNoticia');

@@ -1,8 +1,20 @@
 [
   {
-    "mensaje": "preuba 3",
-    "fecha": "2025-05-14T04:04:47.703Z",
+    "mensaje": "preuba",
+    "fecha": "2025-05-16T03:41:58.301Z",
+    "idNoticia": "Inscripciones abiertas para talleres culturales 2025",
+    "estado": "Rechazada",
+    "index": 1,
+    "respuesta": "preuba",
+    "fechaRespuesta": "16/5/2025, 12:42:11"
+  },
+  {
+    "mensaje": "preuiba",
+    "fecha": "2025-05-16T03:46:32.463Z",
     "idNoticia": "Nuevo centro de salud en Villa Esperanza",
-    "estado": "pendiente"
+    "estado": "Rechazada",
+    "index": 3,
+    "respuesta": "prueba",
+    "fechaRespuesta": "16/5/2025, 12:46:43"
   }
 ]

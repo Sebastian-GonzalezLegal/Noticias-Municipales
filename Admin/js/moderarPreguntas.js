@@ -29,12 +29,17 @@ function mostrarPreguntas() {
                 <p><small>${pregunta.fecha}</small></p>
                 ${pregunta.estado === "Respondida" ? 
                     `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
-                    <p><small>${pregunta.fechaRespuesta}</small></p>` 
-                    : `
-                    <input type="text" id="respuesta_${index}" placeholder="Ingrese respuesta">
+                    <p><small>${pregunta.fechaRespuesta}</small></p>
+                    <button onclick="eliminarPregunta(${index})">Eliminar</button>`
+                : pregunta.estado === "Rechazada" ? 
+                    `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
+                    <p><small>${pregunta.fechaRespuesta}</small></p>
+                    <button onclick="eliminarPregunta(${index})">Eliminar</button>`
+                :
+                    `<input type="text" id="respuesta_${index}" placeholder="Ingrese respuesta">
                     <button onclick="responderPregunta(${index})">Responder</button>
-                    <button onclick="rechazarPregunta(${index})">Rechazar</button>
-                    `}
+                    <button onclick="rechazarPregunta(${index})">Rechazar</button>`
+                }
                 <hr>
             </div>`;
             });
@@ -53,7 +58,7 @@ function responderPregunta(index) {
         return;
     }
 
-    fetch('http://localhost:3000/api/preguntas/${index}', {
+    fetch(`http://localhost:3000/api/preguntas/${index}`, {
         method: 'PUT', // Utiliza PUT para actualizar la pregunta
         headers: {
             'Content-Type': 'application/json'
@@ -63,6 +68,7 @@ function responderPregunta(index) {
             respuesta,
             estado: 'Respondida',
             fechaRespuesta: new Date().toLocaleString()
+            
         })
     })
     .then(res => res.json())
@@ -78,9 +84,41 @@ function responderPregunta(index) {
 }
 
 function rechazarPregunta(index) {
-    if (confirm("¿Está seguro de rechazar la pregunta?")) {
+    let respuesta = document.getElementById("respuesta_" + index).value;
+    if (!respuesta || respuesta.trim() === "") {
+        alert("Ingrese una respuesta.");
+        return;
+    }
+
+    fetch(`http://localhost:3000/api/preguntas/${index}`, {
+        method: 'PUT', // Utiliza PUT para actualizar la pregunta
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            index,
+            respuesta,
+            estado: 'Rechazada',
+            fechaRespuesta: new Date().toLocaleString()
+            
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Pregunta rechazada.");
+        mostrarPreguntas(); 
+    })
+
+        .catch(error => {
+        console.error('Error al rechazar la pregunta:', error);
+        alert("Hubo un error al rechazar.");
+    });
+}
+
+function eliminarPregunta(index) {
+    if (confirm("¿Está seguro de eliminar la pregunta?")) {
         
-        fetch('http://localhost:3000/api/preguntas/${index}', {
+        fetch(`http://localhost:3000/api/preguntas/${index}`, {
             method: 'DELETE', 
             headers: {
                 'Content-Type': 'application/json'
@@ -89,12 +127,12 @@ function rechazarPregunta(index) {
         })
         .then(res => res.json())
         .then(data => {
-            alert("Pregunta rechazada.");
+            alert("Pregunta eliminada.");
             mostrarPreguntas(); 
         })
         .catch(error => {
-            console.error('Error al rechazar la pregunta:', error);
-            alert("Hubo un error al rechazar la pregunta.");
+            console.error('Error al eliminar la pregunta:', error);
+            alert("Hubo un error al eliminar la pregunta.");
         });
     }
 }
