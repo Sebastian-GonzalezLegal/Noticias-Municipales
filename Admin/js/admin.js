@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function verificarAdmin() {
   const esPaginaPublica = window.location.pathname.endsWith('index.html');
   if (!esPaginaPublica && localStorage.getItem('rol') !== 'admin') {
-    window.location.href = '/public/login.html'; // o donde quieras
+    window.location.href = '/public/login.html';
   }
 }
 
@@ -152,22 +152,23 @@ function mostrarNoticias() {
       html += `</div>`;
     }
 
-    html += `<div class="acciones">
-                <button onclick="editarNoticia(${indice})">Editar</button>
-                <button onclick="eliminarNoticia(${indice})">Eliminar</button>
-              </div>`;
-    if (noticia.ubicacion) {
-      html += `<div class="ubicacion">
-                 <button onclick="mostrarMapa(${noticia.ubicacion.lat}, ${noticia.ubicacion.lng}, '${noticia.ubicacion.direccion_normalizada || ''}', ${indice})">
-                  Ver en el mapa
-                 </button>
-                  <div id="map-container-${indice}" class="map-container" style="display: none; margin-top: 20px;">
-                    <h4>Ubicación</h4>
-                    <div id="map-${indice}" style="height: 400px;"></div>
-                    <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
-                  </div>
-               </div>`;
-    }
+html += `<div class="acciones">
+            <button onclick="editarNoticia(${indice})">Editar</button>
+            <button onclick="eliminarNoticia(${indice})">Eliminar</button>
+          </div>
+          <div id="editor-container-${indice}" class="editor-container"></div>`;
+if (noticia.ubicacion && typeof noticia.ubicacion.lat === 'number' && typeof noticia.ubicacion.lng === 'number') {
+  html += `<div class="ubicacion">
+             <button onclick="mostrarMapa(${noticia.ubicacion.lat}, ${noticia.ubicacion.lng}, '${noticia.ubicacion.direccion_normalizada?.replace(/'/g, "\\'") || ''}', ${indice})">
+              Ver en el mapa
+             </button>
+              <div id="map-container-${indice}" class="map-container" style="display: none; margin-top: 20px;">
+                <h4>Ubicación</h4>
+                <div id="map-${indice}" style="height: 400px;"></div>
+                <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
+              </div>
+           </div>`;
+}
     html += `</div><hr>`;
   });
 
@@ -177,6 +178,9 @@ function mostrarNoticias() {
 /**
  * @param {Event} event 
  */
+
+let indiceEditando = null;
+
 function guardarNoticia(event) {
   console.log("Guardando noticia");
   event.preventDefault();
@@ -189,7 +193,6 @@ function guardarNoticia(event) {
   const direccion = document.getElementById('direccion').value;
 
   const inputImagenes = document.getElementById('imagenes');
-  let imagenes = [];
 
   const continuarGuardado = (imagenesFinales) => {
     let noticia = {
@@ -205,13 +208,13 @@ function guardarNoticia(event) {
       normalizarDireccionUSIG(direccion)
         .then(function (ubicacion) {
           noticia.ubicacion = ubicacion;
-          almacenarNoticia(noticia);
+          almacenarNoticia(noticia);  // usa la lógica para agregar o editar
         })
         .catch(function (error) {
           alert("Error al normalizar la dirección: " + error);
         });
     } else {
-      almacenarNoticia(noticia);
+      almacenarNoticia(noticia);  // usa la lógica para agregar o editar
     }
   };
 
@@ -240,16 +243,24 @@ function guardarNoticia(event) {
       continuarGuardado(imagenesData);
     });
   } else {
-    continuarGuardado([]);
+    continuarGuardado([]);  // sin imágenes nuevas
   }
 }
+
 
 /**
  * @param {Object} noticia 
  */
 function almacenarNoticia(noticia) {
   let noticias = obtenerNoticias();
-  noticias.push(noticia);
+
+  if (indiceEditando !== null) {
+    noticias[indiceEditando] = noticia;
+    indiceEditando = null;
+  } else {
+    noticias.push(noticia);
+  }
+
   localStorage.setItem("noticias", JSON.stringify(noticias));
   alert("Noticia guardada exitosamente!");
   document.getElementById('formNoticia').reset();
@@ -261,7 +272,6 @@ function almacenarNoticia(noticia) {
 
   mostrarNoticias();
 }
-
 /**
  * @param {number} lat 
  * @param {number} lng 
@@ -269,62 +279,176 @@ function almacenarNoticia(noticia) {
  * @param {number} indice 
  */
 
-function mostrarMapa(lat, lng, direccionNormalizada, indice) {
-  const container = document.getElementById(`map-container-${indice}`);
-  const mapDiv = document.getElementById(`map-${indice}`);
+const mapas = {};
+function mostrarMapa(lat, lng, direccion, indice) {
+  const contenedor = document.getElementById(`map-container-${indice}`);
+  contenedor.style.display = 'block';
 
-  // Mostrar el contenedor
-  container.style.display = 'block';
+  const mapDivExistente = document.getElementById(`map-${indice}`);
+  if (mapDivExistente) {
+    mapDivExistente.remove();
+  }
 
-  setTimeout(() => {
-    if (!window['mapa_' + indice]) {
-      window['mapa_' + indice] = L.map(`map-${indice}`).setView([lat, lng], 15);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-      }).addTo(window['mapa_' + indice]);
-    }
+  const nuevoDiv = document.createElement('div');
+  nuevoDiv.id = `map-${indice}`;
+  nuevoDiv.style.height = "400px";
+  contenedor.insertBefore(nuevoDiv, contenedor.querySelector('button'));
 
-    const mapa = window['mapa_' + indice];
-    mapa.setView([lat, lng], 15);
-    L.marker([lat, lng]).addTo(mapa)
-      .bindPopup(`<b>${obtenerNoticias()[indice].titulo}</b><br>${direccionNormalizada}`)
-      .openPopup();
-  }, 100);
+  const mapa = L.map(`map-${indice}`).setView([lat, lng], 15);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(mapa);
+
+  L.marker([lat, lng]).addTo(mapa).bindPopup(direccion).openPopup();
 }
 
 function ocultarMapa(indice) {
-  const container = document.getElementById(`map-container-${indice}`);
-  if (container) {
-    container.style.display = 'none';
-  }
+  const contenedorMapa = document.getElementById(`map-container-${indice}`);
+  if (!contenedorMapa) return;
+  contenedorMapa.style.display = "none";
 }
 
 /**
  * @param {number} indice 
  */
+
 function editarNoticia(indice) {
-  let noticias = obtenerNoticias();
-  if (noticias[indice]) {
-    let noticia = noticias[indice];
-    document.getElementById('titulo').value = noticia.titulo;
-    if (document.getElementById('descripcion')) {
-      document.getElementById('descripcion').value = noticia.descripcion || '';
-    }
-    document.getElementById('cuerpo').value = noticia.cuerpo;
-    document.getElementById('fechaPublicacion').value = noticia.fechaPublicacion || '';
-    document.getElementById('tema').value = noticia.tema || '';
-    if (noticia.ubicacion && noticia.ubicacion.direccion_normalizada) {
-      document.getElementById('direccion').value = noticia.ubicacion.direccion_normalizada;
-    }
+  const noticias = obtenerNoticias();
+  const noticia = noticias[indice];
+  
+  indiceEditando = indice;
 
-    noticias.splice(indice, 1);
-    localStorage.setItem("noticias", JSON.stringify(noticias));
+  // Construir el formulario con los datos cargados
+  const formularioHTML = `
+    <form id="formNoticiaEditar-${indice}">
+      <label for="titulo-${indice}">Título:</label>
+      <input type="text" id="titulo-${indice}" name="titulo" value="${noticia.titulo}" required>
 
-    const crearNoticiaSection = document.getElementById('crearNoticiaSection');
-    if (crearNoticiaSection) {
-      crearNoticiaSection.style.display = 'block';
-    }
+      <label for="descripcion-${indice}">Descripción breve:</label>
+      <input type="text" id="descripcion-${indice}" name="descripcion" value="${noticia.descripcion}" required>
+
+      <label for="cuerpo-${indice}">Cuerpo de la Noticia:</label>
+      <textarea id="cuerpo-${indice}" name="cuerpo" required>${noticia.cuerpo}</textarea>
+
+      <label for="fechaPublicacion-${indice}">Fecha de Publicación:</label>
+      <input type="date" id="fechaPublicacion-${indice}" name="fechaPublicacion" value="${noticia.fechaPublicacion}" required>
+
+      <label for="tema-${indice}">Tema:</label>
+      <input type="text" id="tema-${indice}" name="tema" value="${noticia.tema}" required>
+
+      <label for="direccion-${indice}">Dirección (opcional):</label>
+      <input type="text" id="direccion-${indice}" name="direccion" value="${noticia.ubicacion?.direccion_normalizada || ''}">
+
+
+      <label for="imagenes-${indice}">Imágenes (opcional):</label>
+      <input type="file" id="imagenes-${indice}" name="imagenes" multiple>
+
+      <button type="submit">Guardar Cambios</button>
+      <button type="button" onclick="cancelarEdicion(${indice})">Cancelar</button>
+    </form>
+  `;
+
+  // Insertar el formulario dentro del contenedor correspondiente
+  const contenedorEditor = document.getElementById(`editor-container-${indice}`);
+  contenedorEditor.innerHTML = formularioHTML + `
+    <div id="map-container-${indice}" style="width: 100%; height: 300px; margin-top: 10px; display: none;">
+      <div id="map-${indice}" style="width: 100%; height: 100%;"></div>
+    </div>
+  `;
+  
+    if (noticia.ubicacion) {
+    setTimeout(() => {
+      mostrarMapa(noticia.ubicacion.lat, noticia.ubicacion.lng, noticia.ubicacion.direccion_normalizada, indice);
+    }, 300);
   }
+  const formEditar = document.getElementById(`formNoticiaEditar-${indice}`);
+  formEditar.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Obtener la noticia original (antes de editar)
+  const noticiaOriginal = noticias[indice];
+
+  // Leer valores editados del formulario
+  const titulo = formEditar.querySelector(`#titulo-${indice}`).value;
+  const descripcion = formEditar.querySelector(`#descripcion-${indice}`).value;
+  const cuerpo = formEditar.querySelector(`#cuerpo-${indice}`).value;
+  const fechaPublicacion = formEditar.querySelector(`#fechaPublicacion-${indice}`).value;
+  const tema = formEditar.querySelector(`#tema-${indice}`).value;
+  const direccionFormulario = formEditar.querySelector(`#direccion-${indice}`).value;
+  const inputImagenes = formEditar.querySelector(`#imagenes-${indice}`);
+
+  // Función para guardar la noticia final
+  const guardarNoticiaFinal = (imagenesFinales, ubicacion) => {
+    const noticiaEditada = {
+      titulo,
+      descripcion,
+      cuerpo,
+      fechaPublicacion,
+      tema,
+      imagenes: imagenesFinales,
+      ubicacion: ubicacion || noticiaOriginal.ubicacion || null,
+    };
+
+    // Guardar noticia actualizada en el array y localStorage
+    noticias[indice] = noticiaEditada;
+    localStorage.setItem('noticias', JSON.stringify(noticias));
+    indiceEditando = null;
+
+    contenedorEditor.innerHTML = '';
+    mostrarNoticias();
+  };
+
+  // Normalizar dirección si cambió
+  const direccionOriginal = noticiaOriginal.ubicacion?.direccion_normalizada || "";
+  if (direccionFormulario && direccionFormulario.trim() !== "" && direccionFormulario !== direccionOriginal) {
+    normalizarDireccionUSIG(direccionFormulario)
+      .then(ubicacionNormalizada => {
+        procesarImagenes(inputImagenes, noticiaOriginal).then(imagenesFinales => {
+          guardarNoticiaFinal(imagenesFinales, ubicacionNormalizada);
+        });
+      })
+      .catch(error => {
+        alert("Error al normalizar la dirección: " + error);
+      });
+  } else {
+    procesarImagenes(inputImagenes, noticiaOriginal).then(imagenesFinales => {
+      guardarNoticiaFinal(imagenesFinales, noticiaOriginal.ubicacion);
+    });
+  }
+});
+}
+
+function procesarImagenes(inputElement, noticiaOriginal) {
+  return new Promise((resolve) => {
+    if (inputElement && inputElement.files && inputElement.files.length > 0) {
+      const promises = [];
+      for (let i = 0; i < inputElement.files.length; i++) {
+        const file = inputElement.files[i];
+        promises.push(new Promise(res => {
+          const reader = new FileReader();
+          reader.onload = e => {
+            res({
+              nombre: file.name,
+              tipo: file.type,
+              dataUrl: e.target.result
+            });
+          };
+          reader.readAsDataURL(file);
+        }));
+      }
+      Promise.all(promises).then(imagenesData => {
+        resolve(imagenesData);
+      });
+    } else {
+      resolve(noticiaOriginal.imagenes || []);
+    }
+  });
+}
+
+function cancelarEdicion(indice) {
+  const contenedorEditor = document.getElementById(`editor-container-${indice}`);
+  contenedorEditor.innerHTML = ''; // Quita el formulario
+  indiceEditando = null;
 }
 
 /**
@@ -343,6 +467,7 @@ window.editarNoticia = editarNoticia;
 window.eliminarNoticia = eliminarNoticia;
 window.mostrarMapa = mostrarMapa;
 window.ocultarMapa = ocultarMapa;
+window.cancelarEdicion = cancelarEdicion;
 window.guardarNoticia = guardarNoticia;
 window.cerrarSesion = cerrarSesion;
 window.normalizarDireccionUSIG = normalizarDireccionUSIG;

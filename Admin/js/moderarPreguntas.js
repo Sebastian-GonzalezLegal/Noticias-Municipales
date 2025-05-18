@@ -11,7 +11,6 @@ function cerrarSesion() {
 function mostrarPreguntas() {
     let lista = document.getElementById("listaPreguntas");
 
-    // Obtén las preguntas desde la API del servidor
     fetch('http://localhost:3000/api/preguntas')
         .then(res => res.json())
         .then(preguntas => {
@@ -91,7 +90,7 @@ function rechazarPregunta(index) {
     }
 
     fetch(`http://localhost:3000/api/preguntas/${index}`, {
-        method: 'PUT', // Utiliza PUT para actualizar la pregunta
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
