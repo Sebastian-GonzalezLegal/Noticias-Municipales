@@ -4,6 +4,7 @@ import { obtenerNoticias, obtenerCoordenadasUSIG, cerrarSesion } from './utils.j
 document.addEventListener('DOMContentLoaded', function () {
   mostrarNoticias();
   actualizarNavegacion();
+  inicializarFormularioNoticia();
 });
 
 
@@ -63,6 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
   toggleBtn.addEventListener("click", () => {
     navLinks.classList.toggle("show");
   });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+const ocultarBtn = document.getElementById("ocultarMapaBtn");
+if (ocultarBtn) {
+  ocultarBtn.addEventListener("click", () => {
+    document.getElementById("map-container").style.display = "none";
+  });
+  }
 });
 
 function inicializarFormularioNoticia() {
@@ -149,8 +159,13 @@ function mostrarNoticias() {
     if (noticia.ubicacion) {
       html += `<div class="ubicacion">
                  <button onclick="mostrarMapa(${noticia.ubicacion.lat}, ${noticia.ubicacion.lng}, '${noticia.ubicacion.direccion_normalizada || ''}', ${indice})">
-                   Ver en el mapa
+                  Ver en el mapa
                  </button>
+                  <div id="map-container-${indice}" class="map-container" style="display: none; margin-top: 20px;">
+                    <h4>Ubicación</h4>
+                    <div id="map-${indice}" style="height: 400px;"></div>
+                    <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
+                  </div>
                </div>`;
     }
     html += `</div><hr>`;
@@ -197,7 +212,7 @@ function guardarNoticia(event) {
         });
     } else {
       almacenarNoticia(noticia);
-    }dw
+    }
   };
 
   if (inputImagenes && inputImagenes.files && inputImagenes.files.length > 0) {
@@ -253,11 +268,35 @@ function almacenarNoticia(noticia) {
  * @param {string} direccionNormalizada 
  * @param {number} indice 
  */
+
 function mostrarMapa(lat, lng, direccionNormalizada, indice) {
-  window.mapa.setView([lat, lng], 15);
-  L.marker([lat, lng]).addTo(window.mapa)
-    .bindPopup(`<b>${obtenerNoticias()[indice].titulo}</b><br>${direccionNormalizada}`)
-    .openPopup();
+  const container = document.getElementById(`map-container-${indice}`);
+  const mapDiv = document.getElementById(`map-${indice}`);
+
+  // Mostrar el contenedor
+  container.style.display = 'block';
+
+  setTimeout(() => {
+    if (!window['mapa_' + indice]) {
+      window['mapa_' + indice] = L.map(`map-${indice}`).setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(window['mapa_' + indice]);
+    }
+
+    const mapa = window['mapa_' + indice];
+    mapa.setView([lat, lng], 15);
+    L.marker([lat, lng]).addTo(mapa)
+      .bindPopup(`<b>${obtenerNoticias()[indice].titulo}</b><br>${direccionNormalizada}`)
+      .openPopup();
+  }, 100);
+}
+
+function ocultarMapa(indice) {
+  const container = document.getElementById(`map-container-${indice}`);
+  if (container) {
+    container.style.display = 'none';
+  }
 }
 
 /**
@@ -303,6 +342,7 @@ function eliminarNoticia(indice) {
 window.editarNoticia = editarNoticia;
 window.eliminarNoticia = eliminarNoticia;
 window.mostrarMapa = mostrarMapa;
+window.ocultarMapa = ocultarMapa;
 window.guardarNoticia = guardarNoticia;
 window.cerrarSesion = cerrarSesion;
 window.normalizarDireccionUSIG = normalizarDireccionUSIG;

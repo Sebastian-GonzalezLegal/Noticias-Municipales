@@ -232,7 +232,6 @@ form button {
 
 #listaNoticias .noticia {
   border-bottom: 1px solid #eee;
-  padding: 10px 0;
 }
 
 #listaNoticias .noticia:last-child {
@@ -495,5 +494,9 @@ form button {
 }
 
 #preguntas {
+  display: none;
+}
+
+.editar {
   display: none;
 }
