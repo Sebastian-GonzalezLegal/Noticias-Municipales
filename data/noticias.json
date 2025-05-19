@@ -1,20 +1,62 @@
 [
   {
-    "titulo": "El pueblo de Buenos Aires difícil de pronunciar con un restaurante donde se come barato",
-    "cuerpo": "A 400 kilómetros de la Capital, un lugar ideal para pasar un fin de semana de descanso y rica comida, abundante y a buen precio.",
-    "fecha": "2025-05-16",
+    "titulo": "Inauguración del nuevo parque recreativo en Villa Devoto",
+    "cuerpo": "El municipio inauguró un nuevo espacio verde de 5 hectáreas con juegos infantiles, canchas deportivas y áreas de descanso. El proyecto incluye iluminación LED y sistema de riego automático.",
+    "fecha": "2025-05-20",
+    "ubicacion": "Av. Francisco Beiró 5000, CABA"
+  },
+  {
+    "titulo": "Ciclo de cine gratuito en el Centro Cultural San Martín",
+    "cuerpo": "Durante todo el mes de junio se proyectarán películas argentinas clásicas y contemporáneas. Las funciones son gratuitas y se realizarán los fines de semana.",
+    "fecha": "2025-05-18",
+    "ubicacion": "Sarmiento 1551, CABA"
+  },
+  {
+    "titulo": "Nuevo servicio de recolección de residuos reciclables",
+    "cuerpo": "A partir del próximo mes, se implementará un nuevo sistema de recolección diferenciada en todos los barrios. Los vecinos recibirán contenedores especiales para separar los residuos.",
+    "fecha": "2025-05-15",
     "ubicacion": ""
   },
   {
-    "titulo": "Nuevo centro de salud en Villa Esperanza",
-    "cuerpo": "El intendente anunció la apertura de un nuevo centro de salud equipado con tecnología de última generación.",
-    "fecha": "2025-05-14",
+    "titulo": "Festival gastronómico en el Mercado de San Telmo",
+    "cuerpo": "Los mejores chefs de la ciudad se reunirán para ofrecer sus especialidades. Habrá talleres de cocina, degustaciones y música en vivo.",
+    "fecha": "2025-05-12",
+    "ubicacion": "Defensa 963, CABA"
+  },
+  {
+    "titulo": "Mejoras en el sistema de transporte público",
+    "cuerpo": "Se anunciaron nuevas líneas de colectivos y mejoras en la frecuencia de los servicios existentes. También se implementará un sistema de pago electrónico en todas las unidades.",
+    "fecha": "2025-05-10",
     "ubicacion": ""
   },
   {
-    "titulo": "Inscripciones abiertas para talleres culturales 2025",
-    "cuerpo": "Desde este lunes comienzan las inscripciones para más de 30 talleres gratuitos que se dictarán en los centros culturales municipales.",
-    "fecha": "2025-05-13",
-    "ubicacion": "Av. Santa Fe 4000, CABA"
+    "titulo": "Exposición de arte contemporáneo en el Museo de Arte Moderno",
+    "cuerpo": "Se inaugura una muestra con obras de artistas argentinos emergentes. La exposición estará abierta al público durante tres meses.",
+    "fecha": "2025-05-08",
+    "ubicacion": "Av. San Juan 350, CABA"
+  },
+  {
+    "titulo": "Nuevo centro de atención médica en Villa Urquiza",
+    "cuerpo": "El centro contará con especialistas en pediatría, ginecología y clínica general. Atenderá de lunes a sábados con turnos programados.",
+    "fecha": "2025-05-05",
+    "ubicacion": "Av. Triunvirato 4500, CABA"
+  },
+  {
+    "titulo": "Programa de apoyo escolar gratuito",
+    "cuerpo": "Se lanza un nuevo programa de apoyo escolar para estudiantes de primaria y secundaria. Las clases se dictarán en bibliotecas públicas.",
+    "fecha": "2025-05-03",
+    "ubicacion": ""
+  },
+  {
+    "titulo": "Renovación de la Plaza de Mayo",
+    "cuerpo": "Comienzan las obras de restauración y mejoras en la plaza más emblemática de la ciudad. Se incluirá nuevo sistema de iluminación y áreas verdes.",
+    "fecha": "2025-05-01",
+    "ubicacion": "Madres de Plaza de Mayo, CABA"
+  },
+  {
+    "titulo": "Festival de música en el Parque Centenario",
+    "cuerpo": "Se realizará un festival de música con bandas locales y nacionales. Habrá food trucks y actividades para toda la familia.",
+    "fecha": "2025-04-28",
+    "ubicacion": "Av. Díaz Vélez 5000, CABA"
   }
 ]

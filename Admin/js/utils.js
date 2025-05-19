@@ -1,70 +1,103 @@
-/**
- * Obtiene las noticias del localStorage
- * @returns {Array} Array de noticias
- */
-function obtenerNoticias() {
-    console.log("Obteniendo noticias desde localStorage");
-    let noticiasLocalStorage = localStorage.getItem("noticias");
-    if (noticiasLocalStorage) {
-        try {
-            const noticias = JSON.parse(noticiasLocalStorage);
-            console.log(`${noticias.length} noticias obtenidas del localStorage`);
-            return noticias;
-        } catch (e) {
-            console.error("Error al parsear las noticias desde localStorage:", e);
-            return [];
-        }
-    }
-    console.log("No hay noticias en localStorage");
-    return [];
-}
-/**
-* Normaliza una dirección usando el servicio USIG
-* @param {string} direccion - Dirección a normalizar
-* @returns {Promise} Promise con la ubicación normalizada
-*/
-async function obtenerCoordenadasUSIG(direccion) {
-    const url = `http://servicios.usig.buenosaires.gob.ar/normalizar?direccion=${encodeURIComponent(direccion)}`;
-
+export function obtenerNoticias() {
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            console.error("Error en la respuesta de USIG:", response.statusText);
-            return null;
-        }
-
-        const data = await response.json();
-        console.log("Respuesta completa de USIG para:", direccion, data);
-
-        // Verificar estructura de respuesta según API de USIG
-        if (data && data.direccionesNormalizadas && data.direccionesNormalizadas.length > 0) {
-            const candidato = data.direccionesNormalizadas[0];
-            console.log("Candidato obtenido:", candidato);
-
-            // Asegurarse de que hay coordenadas
-            if (candidato.coordenadas && candidato.coordenadas.x != null && candidato.coordenadas.y != null) {
-                return {
-                    lat: candidato.coordenadas.y,
-                    lng: candidato.coordenadas.x,
-                    direccion_normalizada: candidato.direccion || direccion
-                };
-            } else {
-                console.warn("No se encontraron coordenadas para la dirección:", direccion);
-            }
-        } else {
-            console.warn("No se pudo normalizar la dirección:", direccion, data);
-        }
+        const raw = localStorage.getItem('noticias');
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
     } catch (error) {
-        console.error("Error al obtener coordenadas con USIG:", error);
+        console.error("Error al obtener noticias:", error);
+        return [];
     }
-
-    return null;
 }
 
-function cerrarSesion() {
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("rol");
-    window.location.href = "/public/index.html";
+export function cerrarSesion() {
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('rol');
+    window.location.href = '/public/index.html';
 }
 
-export { obtenerNoticias, obtenerCoordenadasUSIG, cerrarSesion };
+export async function normalizarDireccionUSIG(direccion) {
+    const url =
+        'https://servicios.usig.buenosaires.gob.ar/normalizar?direccion=' +
+        encodeURIComponent(direccion);
+    const response = await fetch(url);
+    if (!response.ok) throw new Error('Error en USIG');
+    const data = await response.json();
+    if (
+        data &&
+        data.direccionesNormalizadas &&
+        data.direccionesNormalizadas.length > 0
+    ) {
+        const dirObj = data.direccionesNormalizadas[0];
+        if (
+            dirObj.coordenadas &&
+            dirObj.coordenadas.x != null &&
+            dirObj.coordenadas.y != null
+        ) {
+            return {
+                direccion_normalizada: dirObj.direccion,
+                lat: dirObj.coordenadas.y,
+                lng: dirObj.coordenadas.x,
+            };
+        }
+    }
+    throw new Error('No se pudo normalizar dirección');
+}
+
+export function formatearFecha(fechaISO) {
+    if (!fechaISO) return 'Fecha desconocida';
+    try {
+        const fecha = new Date(fechaISO);
+        return fecha.toLocaleDateString('es-AR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    } catch {
+        return fechaISO;
+    }
+}
+
+export function guardarPregunta(pregunta) {
+    return fetch('http://localhost:3000/api/preguntas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pregunta),
+    }).then((res) => {
+        if (!res.ok) throw new Error('Error en servidor');
+        return res.json();
+    });
+}
+
+export function obtenerPreguntasDeNoticia(tituloNoticia) {
+    return fetch('http://localhost:3000/api/preguntas')
+        .then((response) => {
+            if (!response.ok) throw new Error('Error al obtener preguntas');
+            return response.json();
+        })
+        .then((preguntas) =>
+            preguntas.filter((p) => p.idNoticia === tituloNoticia)
+        );
+}
+
+export function actualizarPregunta(index, datos) {
+    return fetch(`http://localhost:3000/api/preguntas/${index}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos),
+    }).then((response) => {
+        if (!response.ok) throw new Error('Error al actualizar');
+        return response.json();
+    });
+}
+
+export function eliminarPregunta(index) {
+    return fetch(`http://localhost:3000/api/preguntas/${index}`, {
+        method: 'DELETE',
+    }).then((response) => {
+        if (!response.ok) throw new Error('Error al eliminar');
+        return response.json();
+    });
+}

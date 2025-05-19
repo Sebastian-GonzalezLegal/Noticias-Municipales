@@ -21,24 +21,24 @@ function mostrarPreguntas() {
 
             let html = "";
             preguntas.forEach((pregunta, index) => {
-            html += `<div class="pregunta">
+                html += `<div class="pregunta">
                 <p><strong>Noticia:</strong> ${pregunta.idNoticia ?? 'N/A'}</p>
                 <p><strong>Pregunta:</strong> ${pregunta.mensaje}</p>
                 <p><strong>Estado:</strong> ${pregunta.estado ?? 'pendiente'}</p>
                 <p><small>${pregunta.fecha}</small></p>
-                ${pregunta.estado === "Respondida" ? 
-                    `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
+                ${pregunta.estado === "Respondida" ?
+                        `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
                     <p><small>${pregunta.fechaRespuesta}</small></p>
                     <button onclick="eliminarPregunta(${index})">Eliminar</button>`
-                : pregunta.estado === "Rechazada" ? 
-                    `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
+                        : pregunta.estado === "Rechazada" ?
+                            `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
                     <p><small>${pregunta.fechaRespuesta}</small></p>
                     <button onclick="eliminarPregunta(${index})">Eliminar</button>`
-                :
-                    `<input type="text" id="respuesta_${index}" placeholder="Ingrese respuesta">
+                            :
+                            `<input type="text" id="respuesta_${index}" placeholder="Ingrese respuesta">
                     <button onclick="responderPregunta(${index})">Responder</button>
                     <button onclick="rechazarPregunta(${index})">Rechazar</button>`
-                }
+                    }
                 <hr>
             </div>`;
             });
@@ -67,19 +67,19 @@ function responderPregunta(index) {
             respuesta,
             estado: 'Respondida',
             fechaRespuesta: new Date().toLocaleString()
-            
+
         })
     })
-    .then(res => res.json())
-    .then(data => {
-        alert("Pregunta respondida.");
-        mostrarPreguntas(); 
-    })
+        .then(res => res.json())
+        .then(data => {
+            alert("Pregunta respondida.");
+            mostrarPreguntas();
+        })
 
         .catch(error => {
-        console.error('Error al responder la pregunta:', error);
-        alert("Hubo un error al responder.");
-    });
+            console.error('Error al responder la pregunta:', error);
+            alert("Hubo un error al responder.");
+        });
 }
 
 function rechazarPregunta(index) {
@@ -99,39 +99,39 @@ function rechazarPregunta(index) {
             respuesta,
             estado: 'Rechazada',
             fechaRespuesta: new Date().toLocaleString()
-            
+
         })
     })
-    .then(res => res.json())
-    .then(data => {
-        alert("Pregunta rechazada.");
-        mostrarPreguntas(); 
-    })
+        .then(res => res.json())
+        .then(data => {
+            alert("Pregunta rechazada.");
+            mostrarPreguntas();
+        })
 
         .catch(error => {
-        console.error('Error al rechazar la pregunta:', error);
-        alert("Hubo un error al rechazar.");
-    });
+            console.error('Error al rechazar la pregunta:', error);
+            alert("Hubo un error al rechazar.");
+        });
 }
 
 function eliminarPregunta(index) {
     if (confirm("¿Está seguro de eliminar la pregunta?")) {
-        
+
         fetch(`http://localhost:3000/api/preguntas/${index}`, {
-            method: 'DELETE', 
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ index, estado: 'rechazada' })
         })
-        .then(res => res.json())
-        .then(data => {
-            alert("Pregunta eliminada.");
-            mostrarPreguntas(); 
-        })
-        .catch(error => {
-            console.error('Error al eliminar la pregunta:', error);
-            alert("Hubo un error al eliminar la pregunta.");
-        });
+            .then(res => res.json())
+            .then(data => {
+                alert("Pregunta eliminada.");
+                mostrarPreguntas();
+            })
+            .catch(error => {
+                console.error('Error al eliminar la pregunta:', error);
+                alert("Hubo un error al eliminar la pregunta.");
+            });
     }
 }

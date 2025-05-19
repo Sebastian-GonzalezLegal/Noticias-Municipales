@@ -14,5 +14,13 @@
     "username": "prueba",
     "password": "prueba",
     "rol": "usuario"
+  },
+  {
+    "name": "test",
+    "email": "test@test.com",
+    "dni": "12345876",
+    "username": "test",
+    "password": "test",
+    "rol": "usuario"
   }
 ]
