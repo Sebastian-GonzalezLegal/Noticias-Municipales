@@ -343,3 +343,4 @@ function mostrarDetalleNoticia() {
       '<p>Error al mostrar la noticia. Volvé a la <a href="index.html">página principal</a>.</p>';
   }
 }
+

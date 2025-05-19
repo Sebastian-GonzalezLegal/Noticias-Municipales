@@ -33,40 +33,12 @@
             <div id="listaNoticias">
             </div>
         </section>
- 
-        <section id="crearNoticiaSection" style="display: none;">
-            <h2>Editar Noticia</h2>
-            <form id="formNoticia" enctype="multipart/form-data">
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" required>
-
-                <label for="descripcion">Descripción breve:</label>
-                <input type="text" id="descripcion" name="descripcion" required>
-
-                <label for="cuerpo">Cuerpo de la Noticia:</label>
-                <textarea id="cuerpo" name="cuerpo" required></textarea>
-
-                <label for="fechaPublicacion">Fecha de Publicación:</label>
-                <input type="date" id="fechaPublicacion" name="fechaPublicacion" required>
-
-                <label for="tema">Tema:</label>
-                <input type="text" id="tema" name="tema" required>
-
-                <label for="direccion">Dirección (opcional):</label>
-                <input type="text" id="direccion" name="direccion">
-
-                <label for="imagenes">Imágenes (opcional):</label>
-                <input type="file" id="imagenes" name="imagenes" multiple>
-
-                <button type="submit">Guardar Noticia</button>
-            </form>
-            <div id="map"></div>
-        </section>
     </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script type="module" src="js/admin.js"></script>
+    
 </body>
 
 </html>

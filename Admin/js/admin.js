@@ -4,7 +4,7 @@ import {
   cerrarSesion,
 } from './utils.js';
 
-let mapasInstancias = {};
+
 let indiceEditando = null;
 
 function verificarAdmin() {
@@ -90,41 +90,52 @@ async function mostrarNoticias() {
         <div id="editor-container-${indice}" class="editor-container"></div>
     `;
 
-    // Si la noticia ya tiene ubicacion con lat/lng, mostramos también el botón “Ver en el mapa”
-    if (
-      noticia.ubicacion &&
-      typeof noticia.ubicacion.lat === 'number' &&
-      typeof noticia.ubicacion.lng === 'number'
-    ) {
-      const dirTexto = noticia.ubicacion.direccion_normalizada || '';
-      const dirEscapada = dirTexto.replace(/'/g, "\\'");
-      html += `
-        <div class="ubicacion">
-          <button onclick="mostrarMapa(
-            ${noticia.ubicacion.lat},
-            ${noticia.ubicacion.lng},
-            '${dirEscapada}',
-            ${indice}
-          )">
-            Ver en el mapa
-          </button>
-          <div
-            id="map-container-${indice}"
-            class="map-container"
-            style="display: none; margin-top: 20px;"
-          >
-            <h4>Ubicación</h4>
-            <div id="map-${indice}" style="height: 400px;"></div>
-            <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
-          </div>
-        </div>
-      `;
-    }
+  // Si la noticia ya tiene ubicacion, mostramos también el botón “Ver en el mapa”
+  const direccionParaMapa = noticia.ubicacion?.direccion_normalizada || noticia.ubicacion || noticia.direccion || '';
+  if (direccionParaMapa != '') {
+    const dirEscapada = direccionParaMapa.replace(/'/g, "\\'");
 
+    html += `
+      <div class="ubicacion">
+        <button onclick="verMapaConNormalizacion('${dirEscapada}', ${indice})">
+          Ver en el mapa
+        </button>
+        <div
+          id="map-container-${indice}"
+          class="map-container"
+          style="display: none; margin-top: 20px;"
+        >
+          <h4>Ubicación</h4>
+          <div id="map-${indice}" style="height: 400px;"></div>
+          <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
+        </div>
+      </div>
+    `;
+  }
     html += `</div><hr>`;
   });
 
   listaNoticiasDiv.innerHTML = html;
+}
+
+async function verMapaConNormalizacion(direccion, indice) {
+  try {
+    const resultado = await normalizarDireccionUSIG(direccion);
+    mostrarMapa(resultado.lat, resultado.lng, resultado.direccion_normalizada, indice);
+
+    // 🔒 Opcional: guardar ubicación normalizada en localStorage
+    const noticias = obtenerNoticias();
+    if (noticias[indice]) {
+      noticias[indice].ubicacion = {
+        direccion_normalizada: resultado.direccion_normalizada,
+        lat: resultado.lat,
+        lng: resultado.lng,
+      };
+      localStorage.setItem('noticias', JSON.stringify(noticias));
+    }
+  } catch (error) {
+    alert('No se pudo obtener la ubicación: ' + error.message);
+  }
 }
 
 const NOTICIAS_VERSION = 2;
@@ -296,29 +307,21 @@ function editarNoticia(indice) {
       <label for="fechaPublicacion-${indice}">Fecha de Publicación:</label>
       <input type="date" id="fechaPublicacion-${indice}" name="fechaPublicacion" value="${noticia.fechaPublicacion}" required>
       <label for="tema-${indice}">Tema:</label>
-      <input type="text" id="tema-${indice}" name="tema" value="${noticia.tema}" required>
+      <select id="tema-${indice}" name="tema" required>
+        <option value="general" ${noticia.tema === "general" ? "selected" : ""}>General</option>
+        <option value="politica" ${noticia.tema === "politica" ? "selected" : ""}>Política</option>
+        <option value="economia" ${noticia.tema === "economia" ? "selected" : ""}>Economía</option>
+        <option value="deportes" ${noticia.tema === "deportes" ? "selected" : ""}>Deportes</option>
+        <option value="cultura" ${noticia.tema === "cultura" ? "selected" : ""}>Cultura</option>
+        <option value="tecnologia" ${noticia.tema === "tecnologia" ? "selected" : ""}>Tecnología</option>
+      </select>
       <label for="direccion-${indice}">Dirección (opcional):</label>
       <input type="text" id="direccion-${indice}" name="direccion" value="${valorDireccion}">
       <label for="imagenes-${indice}">Imágenes (opcional):</label>
       <input type="file" id="imagenes-${indice}" name="imagenes" multiple>
       <button type="submit">Guardar Cambios</button>
       <button type="button" onclick="cancelarEdicion(${indice})">Cancelar</button>
-      ${
-    // Si la noticia ya tenía lat/lng, mostramos aquí botón para “Ver Mapa” dentro del editor
-    noticia.ubicacion &&
-      typeof noticia.ubicacion.lat === 'number' &&
-      typeof noticia.ubicacion.lng === 'number'
-      ? `<button type="button" onclick="mostrarMapa(
-               ${noticia.ubicacion.lat},
-               ${noticia.ubicacion.lng},
-               '${(noticia.ubicacion.direccion_normalizada || '').replace(/'/g, "\\'")}',
-               ${indice}
-             )">Ver Mapa</button>`
-      : ''
-    }
-    </form>
   `;
-
   const contenedorEditor = document.getElementById(`editor-container-${indice}`);
   contenedorEditor.innerHTML =
     formularioHTML +
@@ -377,11 +380,9 @@ function editarNoticia(indice) {
             guardarNoticiaFinal(imagenesFinales, ubicacionNormalizada);
           });
         })
-        .catch(() => {
-          procesarImagenes(inputImagenes, noticiaOriginal).then((imagenesFinales) => {
-            guardarNoticiaFinal(imagenesFinales, noticiaOriginal.ubicacion);
-          });
-        });
+      .catch(() => {
+        alert('No se pudo normalizar la dirección. Por favor revisá que sea válida.');
+      });
     } else {
       procesarImagenes(inputImagenes, noticiaOriginal).then((imagenesFinales) => {
         guardarNoticiaFinal(imagenesFinales, noticiaOriginal.ubicacion);
@@ -439,6 +440,28 @@ function eliminarNoticia(indice) {
   }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  actualizarNavegacion();
+
+  const toggleBtn = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("navPrincipal");
+
+  if (toggleBtn && navLinks) {
+    toggleBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+  }
+
+  const toggleBtnAdmin = document.getElementById("nav-toggle-admin");
+  const navLinksAdmin = document.getElementById("navAdmin");
+
+  if (toggleBtnAdmin && navLinksAdmin) {
+    toggleBtnAdmin.addEventListener("click", () => {
+      navLinksAdmin.classList.toggle("show");
+    });
+  }
+});
+
 window.verificarAdmin = verificarAdmin;
 window.editarNoticia = editarNoticia;
 window.eliminarNoticia = eliminarNoticia;
@@ -447,3 +470,4 @@ window.ocultarMapa = ocultarMapa;
 window.cancelarEdicion = cancelarEdicion;
 window.guardarNoticia = guardarNoticia;
 window.cerrarSesion = cerrarSesion;
+window.verMapaConNormalizacion = verMapaConNormalizacion;
