@@ -33,8 +33,8 @@ function actualizarNavegacion() {
     `;
   } else {
     contenido = `
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+      <a href="login.html">Autenticarse</a>
+      <a href="register.html">Registrarse</a>
     `;
   }
 

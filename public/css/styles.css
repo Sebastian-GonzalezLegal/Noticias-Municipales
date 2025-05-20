@@ -229,7 +229,6 @@ article#detalleNoticia {
   }
 }
 
-/* Contenedor */
 .galeria-imagenes {
   display: flex;
   flex-wrap: wrap;
@@ -238,7 +237,6 @@ article#detalleNoticia {
   justify-content: space-between;
 }
 
-/* Cada imagen */
 .galeria-imagenes .news-image {
   flex: 1 1 calc(48%);
   max-width: calc(48%);
