@@ -101,3 +101,24 @@ export function eliminarPregunta(index) {
         return response.json();
     });
 }
+
+export function normalizarRutaImagen(imagen) {
+    if (!imagen) return '';
+    if (typeof imagen === 'object' && imagen.dataUrl) {
+        return imagen.dataUrl;
+    }
+    if (typeof imagen === 'string') {
+        const rutaLimpia = imagen.startsWith('/') ? imagen : `/${imagen}`;
+        if (rutaLimpia.startsWith('/imagenes/')) {
+            return rutaLimpia;
+        }
+        if (rutaLimpia.includes('/images/')) {
+            return rutaLimpia.replace('/images/', '/imagenes/');
+        }
+        if (!rutaLimpia.includes('/')) {
+            return `/data/imagenes/${rutaLimpia}`;
+        }
+        return rutaLimpia;
+    }
+    return '';
+}

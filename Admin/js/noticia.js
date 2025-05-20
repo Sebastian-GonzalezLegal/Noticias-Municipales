@@ -5,8 +5,7 @@ import {
   formatearFecha,
   guardarPregunta,
   obtenerPreguntasDeNoticia,
-  actualizarPregunta,
-  eliminarPregunta,
+  normalizarRutaImagen,
 } from './utils.js';
 
 let mapasInstancias = {};
@@ -120,11 +119,8 @@ function mostrarListaNoticias(noticias, contenedor) {
     if (noticia.imagenes && noticia.imagenes.length > 0) {
       contenidoHTML += `<div class="galeria-imagenes">`;
       noticia.imagenes.forEach((imagen) => {
-        if (imagen && imagen.dataUrl) {
-          contenidoHTML += `<img src="${imagen.dataUrl}" alt="${imagen.nombre}" style="max-width: 150px; margin: 5px;">`;
-        } else if (typeof imagen === 'string') {
-          contenidoHTML += `<img src="/images/${imagen}" alt="${imagen}" style="max-width: 150px; margin: 5px;">`;
-        }
+        const rutaImagen = normalizarRutaImagen(imagen);
+        contenidoHTML += `<img class="news-image" src="${rutaImagen}" alt="${noticia.titulo}">`;
       });
       contenidoHTML += `</div>`;
     }
@@ -227,11 +223,8 @@ function mostrarDetalleNoticia() {
     if (noticia.imagenes && noticia.imagenes.length > 0) {
       html += `<div class="galeria-imagenes">`;
       noticia.imagenes.forEach((imagen) => {
-        if (imagen && imagen.dataUrl) {
-          html += `<img src="${imagen.dataUrl}" alt="${imagen.nombre}" style="max-width: 100%; margin: 10px 0;">`;
-        } else if (typeof imagen === 'string') {
-          html += `<img src="/images/${imagen}" alt="${imagen}" style="max-width: 100%; margin: 10px 0;">`;
-        }
+        const rutaImagen = normalizarRutaImagen(imagen);
+        html += `<img src="${rutaImagen}" alt="${typeof imagen === 'string' ? imagen.split('/').pop() : 'imagen'}" style="max-width: 48%; margin: 10px 0;">`;
       });
       html += `</div>`;
     }
@@ -302,10 +295,8 @@ function mostrarDetalleNoticia() {
       }, 300);
     }
 
-    // Cargar solo preguntas RESPONDIDAS (estado === "Respondida")
     obtenerPreguntasDeNoticia(noticia.titulo)
       .then((preguntasNoticia) => {
-        // Filtrar únicamente las ya respondidas
         const respondidas = preguntasNoticia.filter(
           (p) => p.estado === 'Respondida' && p.respuesta
         );
@@ -319,17 +310,17 @@ function mostrarDetalleNoticia() {
         let htmlPregs = '';
         respondidas.forEach((pregunta) => {
           htmlPregs += `
-            <div class="pregunta-item">
-              <div class="pregunta-header">
-                <p class="pregunta-texto"><strong>Pregunta:</strong> ${pregunta.mensaje}</p>
-                <small class="pregunta-fecha">${formatearFecha(pregunta.fecha)}</small>
-              </div>
-              <div class="respuesta">
-                <p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
-              </div>
-            </div>
-            <hr>
-          `;
+         <div class="pregunta-item">
+           <div class="pregunta-header">
+             <p class="pregunta-texto"><strong>Pregunta:</strong> ${pregunta.mensaje}</p>
+             <small class="pregunta-fecha">${formatearFecha(pregunta.fecha)}</small>
+           </div>
+           <div class="respuesta">
+             <p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
+           </div>
+         </div>
+         <hr>
+       `;
         });
 
         contenedorPreguntas.innerHTML = htmlPregs;
@@ -343,4 +334,3 @@ function mostrarDetalleNoticia() {
       '<p>Error al mostrar la noticia. Volvé a la <a href="index.html">página principal</a>.</p>';
   }
 }
-

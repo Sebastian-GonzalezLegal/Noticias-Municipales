@@ -1,62 +1,119 @@
 [
   {
-    "titulo": "Inauguración del nuevo parque recreativo en Villa Devoto",
+    "titulo": "Inauguración del nuevo parque recreativo en Villa Ballester",
+    "descripcion": "Nuevo espacio verde para toda la comunidad",
     "cuerpo": "El municipio inauguró un nuevo espacio verde de 5 hectáreas con juegos infantiles, canchas deportivas y áreas de descanso. El proyecto incluye iluminación LED y sistema de riego automático.",
     "fecha": "2025-05-20",
-    "ubicacion": "Av. Francisco Beiró 5000, CABA"
+    "ubicacion": "Av. San Martín 4500, San Martín",
+    "tema": "Obras Públicas",
+    "imagenes": [
+      "imagenes/parque-inaguracion-1.jpg",
+      "imagenes/parque-inaguracion-2.jpg"
+    ]
   },
   {
     "titulo": "Ciclo de cine gratuito en el Centro Cultural San Martín",
-    "cuerpo": "Durante todo el mes de junio se proyectarán películas argentinas clásicas y contemporáneas. Las funciones son gratuitas y se realizarán los fines de semana.",
+    "descripcion": "Cine argentino para toda la familia",
+    "cuerpo": "Durante todo el mes de junio se proyectarán películas argentinas clásicas y contemporáneas. Las funciones son gratuitas y se realizarán los fines de semana en el centro cultural municipal.",
     "fecha": "2025-05-18",
-    "ubicacion": "Sarmiento 1551, CABA"
+    "ubicacion": "Intendente Campos 2089, San Martín",
+    "tema": "Cultura",
+    "imagenes": [
+      "imagenes/cine-centro-cultural.jpg"
+    ]
   },
   {
     "titulo": "Nuevo servicio de recolección de residuos reciclables",
-    "cuerpo": "A partir del próximo mes, se implementará un nuevo sistema de recolección diferenciada en todos los barrios. Los vecinos recibirán contenedores especiales para separar los residuos.",
+    "descripcion": "Mejora en el sistema de reciclaje municipal",
+    "cuerpo": "A partir del próximo mes, se implementará un nuevo sistema de recolección diferenciada en todos los barrios del municipio. Los vecinos recibirán contenedores especiales para separar los residuos.",
     "fecha": "2025-05-15",
-    "ubicacion": ""
+    "ubicacion": "San Martín",
+    "tema": "Medio Ambiente",
+    "imagenes": [
+      "imagenes/contenedores-reciclaje.jpg",
+      "imagenes/camion-recoleccion.jpg"
+    ]
   },
   {
-    "titulo": "Festival gastronómico en el Mercado de San Telmo",
-    "cuerpo": "Los mejores chefs de la ciudad se reunirán para ofrecer sus especialidades. Habrá talleres de cocina, degustaciones y música en vivo.",
+    "titulo": "Festival gastronómico en la Plaza Central",
+    "descripcion": "Celebración de la gastronomía local",
+    "cuerpo": "Los mejores chefs locales se reunirán para ofrecer sus especialidades. Habrá talleres de cocina, degustaciones y música en vivo en la plaza principal del municipio.",
     "fecha": "2025-05-12",
-    "ubicacion": "Defensa 963, CABA"
+    "ubicacion": "Plaza Central, San Martín",
+    "tema": "Eventos",
+    "imagenes": [
+      "imagenes/festival-gastronomico-1.jpg",
+      "imagenes/festival-gastronomico-2.jpg"
+    ]
   },
   {
-    "titulo": "Mejoras en el sistema de transporte público",
-    "cuerpo": "Se anunciaron nuevas líneas de colectivos y mejoras en la frecuencia de los servicios existentes. También se implementará un sistema de pago electrónico en todas las unidades.",
+    "titulo": "Mejoras en el sistema de transporte público municipal",
+    "descripcion": "Modernización del transporte local",
+    "cuerpo": "Se anunciaron nuevas líneas de colectivos locales y mejoras en la frecuencia de los servicios existentes. También se implementará un sistema de pago electrónico en todas las unidades.",
     "fecha": "2025-05-10",
-    "ubicacion": ""
+    "ubicacion": "San Martín",
+    "tema": "Transporte",
+    "imagenes": [
+      "imagenes/colectivo-nuevo.jpg"
+    ]
   },
   {
-    "titulo": "Exposición de arte contemporáneo en el Museo de Arte Moderno",
-    "cuerpo": "Se inaugura una muestra con obras de artistas argentinos emergentes. La exposición estará abierta al público durante tres meses.",
+    "titulo": "Exposición de arte local en el Museo Municipal",
+    "descripcion": "Muestra de artistas emergentes del municipio",
+    "cuerpo": "Se inaugura una muestra con obras de artistas locales emergentes. La exposición estará abierta al público durante tres meses en el museo municipal.",
     "fecha": "2025-05-08",
-    "ubicacion": "Av. San Juan 350, CABA"
+    "ubicacion": "Av. San Martín 350, San Martín",
+    "tema": "Cultura",
+    "imagenes": [
+      "imagenes/exposicion-arte-1.jpg",
+      "imagenes/exposicion-arte-2.jpg"
+    ]
   },
   {
-    "titulo": "Nuevo centro de atención médica en Villa Urquiza",
+    "titulo": "Nuevo centro de atención médica en Villa Ballester",
+    "descripcion": "Ampliación de servicios de salud municipal",
     "cuerpo": "El centro contará con especialistas en pediatría, ginecología y clínica general. Atenderá de lunes a sábados con turnos programados.",
     "fecha": "2025-05-05",
-    "ubicacion": "Av. Triunvirato 4500, CABA"
+    "ubicacion": "Av. San Martín 4500, San Martín",
+    "tema": "Salud",
+    "imagenes": [
+      "imagenes/centro-medico-1.jpg",
+      "imagenes/centro-medico-2.jpg"
+    ]
   },
   {
-    "titulo": "Programa de apoyo escolar gratuito",
-    "cuerpo": "Se lanza un nuevo programa de apoyo escolar para estudiantes de primaria y secundaria. Las clases se dictarán en bibliotecas públicas.",
+    "titulo": "Programa de apoyo escolar gratuito en bibliotecas municipales",
+    "descripcion": "Refuerzo educativo para estudiantes locales",
+    "cuerpo": "Se lanza un nuevo programa de apoyo escolar para estudiantes de primaria y secundaria. Las clases se dictarán en las bibliotecas públicas del municipio.",
     "fecha": "2025-05-03",
-    "ubicacion": ""
+    "ubicacion": "San Martín",
+    "tema": "Educación",
+    "imagenes": [
+      "imagenes/apoyo-escolar.jpg"
+    ]
   },
   {
-    "titulo": "Renovación de la Plaza de Mayo",
-    "cuerpo": "Comienzan las obras de restauración y mejoras en la plaza más emblemática de la ciudad. Se incluirá nuevo sistema de iluminación y áreas verdes.",
+    "titulo": "Renovación de la Plaza Central",
+    "descripcion": "Mejoras en el espacio público más importante",
+    "cuerpo": "Comienzan las obras de restauración y mejoras en la plaza principal del municipio. Se incluirá nuevo sistema de iluminación y áreas verdes.",
     "fecha": "2025-05-01",
-    "ubicacion": "Madres de Plaza de Mayo, CABA"
+    "ubicacion": "Plaza Central, San Martín",
+    "tema": "Obras Públicas",
+    "imagenes": [
+      "imagenes/plaza-renovacion-1.jpg",
+      "imagenes/plaza-renovacion-2.jpg"
+    ]
   },
   {
-    "titulo": "Festival de música en el Parque Centenario",
-    "cuerpo": "Se realizará un festival de música con bandas locales y nacionales. Habrá food trucks y actividades para toda la familia.",
+    "titulo": "Festival de música en el Parque Municipal",
+    "descripcion": "Celebración musical para toda la comunidad",
+    "cuerpo": "Se realizará un festival de música con bandas locales. Habrá food trucks y actividades para toda la familia en el parque principal del municipio.",
     "fecha": "2025-04-28",
-    "ubicacion": "Av. Díaz Vélez 5000, CABA"
+    "ubicacion": "Parque Yrigoyen, San Martín",
+    "tema": "Eventos",
+    "imagenes": [
+      "imagenes/festival-musica-1.jpg",
+      "imagenes/festival-musica-2.jpg"
+    ]
   }
 ]

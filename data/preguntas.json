@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "mensaje": "¿Tiene los nuevos totems de seguridad?",
+    "fecha": "2025-05-20T00:32:48.936Z",
+    "idNoticia": "Inauguración del nuevo parque recreativo en Villa Ballester",
+    "estado": "Pendiente"
+  },
+  {
+    "mensaje": "¿Hasta qué hora está abierto?",
+    "fecha": "2025-05-20T00:33:10.033Z",
+    "idNoticia": "Ciclo de cine gratuito en el Centro Cultural San Martín",
+    "estado": "Pendiente"
+  },
+  {
+    "mensaje": "¿Cuándo tienen planeado terminar las obras?",
+    "fecha": "2025-05-20T00:33:49.042Z",
+    "idNoticia": "Renovación de la Plaza Central",
+    "estado": "Pendiente"
+  },
+  {
+    "mensaje": "¿Desde y hasta qué hora se dictan las clases?",
+    "fecha": "2025-05-20T00:34:14.834Z",
+    "idNoticia": "Programa de apoyo escolar gratuito en bibliotecas municipales",
+    "estado": "Pendiente"
+  }
+]

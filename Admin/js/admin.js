@@ -2,6 +2,7 @@ import {
   obtenerNoticias,
   normalizarDireccionUSIG,
   cerrarSesion,
+  normalizarRutaImagen,
 } from './utils.js';
 
 
@@ -28,7 +29,6 @@ function actualizarNavegacion() {
     `;
   } else if (rol === 'usuario') {
     contenido = `
-      <a href="mis-preguntas.html">Mis Preguntas</a>
       <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
     `;
   } else {
@@ -49,7 +49,7 @@ function inicializarFormularioNoticia() {
   nuevoForm.addEventListener('submit', guardarNoticia);
 }
 
-async function mostrarNoticias() {
+function mostrarNoticias() {
   const listaNoticiasDiv = document.getElementById('listaNoticias');
   if (!listaNoticiasDiv) return;
 
@@ -73,11 +73,8 @@ async function mostrarNoticias() {
     if (noticia.imagenes && noticia.imagenes.length > 0) {
       html += `<div class="galeria-imagenes">`;
       noticia.imagenes.forEach((imagen) => {
-        if (imagen && imagen.dataUrl) {
-          html += `<img src="${imagen.dataUrl}" alt="${imagen.nombre}" style="max-width: 200px; margin: 5px;">`;
-        } else if (typeof imagen === 'string') {
-          html += `<img src="/images/${imagen}" alt="${imagen}" style="max-width: 200px; margin: 5px;">`;
-        }
+        const rutaImagen = normalizarRutaImagen(imagen);
+        html += `<img src="${rutaImagen}" alt="${typeof imagen === 'string' ? imagen.split('/').pop() : 'imagen'}" style="max-width: 200px; margin: 5px;">`;
       });
       html += `</div>`;
     }
@@ -90,28 +87,27 @@ async function mostrarNoticias() {
         <div id="editor-container-${indice}" class="editor-container"></div>
     `;
 
-  // Si la noticia ya tiene ubicacion, mostramos también el botón “Ver en el mapa”
-  const direccionParaMapa = noticia.ubicacion?.direccion_normalizada || noticia.ubicacion || noticia.direccion || '';
-  if (direccionParaMapa != '') {
-    const dirEscapada = direccionParaMapa.replace(/'/g, "\\'");
+    const direccionParaMapa = noticia.ubicacion?.direccion_normalizada || noticia.ubicacion || noticia.direccion || '';
+    if (direccionParaMapa != '') {
+      const dirEscapada = direccionParaMapa.replace(/'/g, "\\'");
 
-    html += `
-      <div class="ubicacion">
-        <button onclick="verMapaConNormalizacion('${dirEscapada}', ${indice})">
-          Ver en el mapa
-        </button>
-        <div
-          id="map-container-${indice}"
-          class="map-container"
-          style="display: none; margin-top: 20px;"
-        >
-          <h4>Ubicación</h4>
-          <div id="map-${indice}" style="height: 400px;"></div>
-          <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
+      html += `
+        <div class="ubicacion">
+          <button onclick="verMapaConNormalizacion('${dirEscapada}', ${indice})">
+            Ver en el mapa
+          </button>
+          <div
+            id="map-container-${indice}"
+            class="map-container"
+            style="display: none; margin-top: 20px;"
+          >
+            <h4>Ubicación</h4>
+            <div id="map-${indice}" style="height: 400px;"></div>
+            <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
+          </div>
         </div>
-      </div>
-    `;
-  }
+      `;
+    }
     html += `</div><hr>`;
   });
 
@@ -123,7 +119,6 @@ async function verMapaConNormalizacion(direccion, indice) {
     const resultado = await normalizarDireccionUSIG(direccion);
     mostrarMapa(resultado.lat, resultado.lng, resultado.direccion_normalizada, indice);
 
-    // 🔒 Opcional: guardar ubicación normalizada en localStorage
     const noticias = obtenerNoticias();
     if (noticias[indice]) {
       noticias[indice].ubicacion = {
@@ -149,18 +144,17 @@ function inicializarNoticiasLocales() {
       if (!res.ok) throw new Error('No se pudo obtener noticias.json');
       return res.json();
     })
-    .then((noticiasJSON) => {
-      const noticiasParaLocal = noticiasJSON.map((n) => ({
+    .then(noticiasJSON => {
+      const noticiasParaLocal = noticiasJSON.map(n => ({
         titulo: n.titulo || '',
         descripcion: n.descripcion || '',
         cuerpo: n.cuerpo || '',
         fechaPublicacion: n.fecha || '',
         tema: n.tema || '',
-        imagenes: [],
-        ubicacion:
-          typeof n.ubicacion === 'string' && n.ubicacion.trim() !== ''
-            ? n.ubicacion
-            : null,
+        imagenes: Array.isArray(n.imagenes) ? n.imagenes : [],
+        ubicacion: typeof n.ubicacion === 'string' && n.ubicacion.trim()
+          ? n.ubicacion
+          : null,
       }));
       localStorage.setItem('noticias', JSON.stringify(noticiasParaLocal));
       localStorage.setItem('noticias_version', NOTICIAS_VERSION);
@@ -284,7 +278,6 @@ function editarNoticia(indice) {
   const noticia = noticias[indice];
   indiceEditando = indice;
 
-  // Pre‑cargar el string “dirección” si venía como cadena en JSON
   let valorDireccion = '';
   if (typeof noticia.ubicacion === 'string') {
     valorDireccion = noticia.ubicacion;
@@ -380,9 +373,9 @@ function editarNoticia(indice) {
             guardarNoticiaFinal(imagenesFinales, ubicacionNormalizada);
           });
         })
-      .catch(() => {
-        alert('No se pudo normalizar la dirección. Por favor revisá que sea válida.');
-      });
+        .catch(() => {
+          alert('No se pudo normalizar la dirección. Por favor revisá que sea válida.');
+        });
     } else {
       procesarImagenes(inputImagenes, noticiaOriginal).then((imagenesFinales) => {
         guardarNoticiaFinal(imagenesFinales, noticiaOriginal.ubicacion);
