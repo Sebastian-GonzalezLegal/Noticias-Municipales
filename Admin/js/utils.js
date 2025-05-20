@@ -1,3 +1,14 @@
+export const mapTemas = new Map([
+  ['obras-publicas'	,'Obras Públicas'],
+  ['medio-ambiente'	,'Medio Ambiente'],
+  ['cultura'		,'Cultura'],
+  ['deportes'		,'Deportes'],
+  ['salud'		,'Salud'],
+  ['educación'		,'Educación'],
+  ['eventos'		,'Eventos'],
+  ['transporte'		,'Transporte'],
+]);
+
 export function obtenerNoticias() {
     try {
         const raw = localStorage.getItem('noticias');

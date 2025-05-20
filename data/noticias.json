@@ -5,7 +5,7 @@
     "cuerpo": "El municipio inauguró un nuevo espacio verde de 5 hectáreas con juegos infantiles, canchas deportivas y áreas de descanso. El proyecto incluye iluminación LED y sistema de riego automático.",
     "fecha": "2025-05-20",
     "ubicacion": "Av. San Martín 4500, San Martín",
-    "tema": "Obras Públicas",
+    "tema": "obras-publicas",
     "imagenes": [
       "imagenes/parque-inaguracion-1.jpg",
       "imagenes/parque-inaguracion-2.jpg"
@@ -17,7 +17,7 @@
     "cuerpo": "Durante todo el mes de junio se proyectarán películas argentinas clásicas y contemporáneas. Las funciones son gratuitas y se realizarán los fines de semana en el centro cultural municipal.",
     "fecha": "2025-05-18",
     "ubicacion": "Intendente Campos 2089, San Martín",
-    "tema": "Cultura",
+    "tema": "cultura",
     "imagenes": [
       "imagenes/cine-centro-cultural.jpg"
     ]
@@ -28,7 +28,7 @@
     "cuerpo": "A partir del próximo mes, se implementará un nuevo sistema de recolección diferenciada en todos los barrios del municipio. Los vecinos recibirán contenedores especiales para separar los residuos.",
     "fecha": "2025-05-15",
     "ubicacion": "San Martín",
-    "tema": "Medio Ambiente",
+    "tema": "medio-ambiente",
     "imagenes": [
       "imagenes/contenedores-reciclaje.jpg",
       "imagenes/camion-recoleccion.jpg"
@@ -63,7 +63,7 @@
     "cuerpo": "Se inaugura una muestra con obras de artistas locales emergentes. La exposición estará abierta al público durante tres meses en el museo municipal.",
     "fecha": "2025-05-08",
     "ubicacion": "Av. San Martín 350, San Martín",
-    "tema": "Cultura",
+    "tema": "cultura",
     "imagenes": [
       "imagenes/exposicion-arte-1.jpg",
       "imagenes/exposicion-arte-2.jpg"
@@ -75,7 +75,7 @@
     "cuerpo": "El centro contará con especialistas en pediatría, ginecología y clínica general. Atenderá de lunes a sábados con turnos programados.",
     "fecha": "2025-05-05",
     "ubicacion": "Av. San Martín 4500, San Martín",
-    "tema": "Salud",
+    "tema": "salud",
     "imagenes": [
       "imagenes/centro-medico-1.jpg",
       "imagenes/centro-medico-2.jpg"
@@ -87,7 +87,7 @@
     "cuerpo": "Se lanza un nuevo programa de apoyo escolar para estudiantes de primaria y secundaria. Las clases se dictarán en las bibliotecas públicas del municipio.",
     "fecha": "2025-05-03",
     "ubicacion": "San Martín",
-    "tema": "Educación",
+    "tema": "educacion",
     "imagenes": [
       "imagenes/apoyo-escolar.jpg"
     ]
@@ -98,7 +98,7 @@
     "cuerpo": "Comienzan las obras de restauración y mejoras en la plaza principal del municipio. Se incluirá nuevo sistema de iluminación y áreas verdes.",
     "fecha": "2025-05-01",
     "ubicacion": "Plaza Central, San Martín",
-    "tema": "Obras Públicas",
+    "tema": "obras-publicas",
     "imagenes": [
       "imagenes/plaza-renovacion-1.jpg",
       "imagenes/plaza-renovacion-2.jpg"
@@ -110,7 +110,7 @@
     "cuerpo": "Se realizará un festival de música con bandas locales. Habrá food trucks y actividades para toda la familia en el parque principal del municipio.",
     "fecha": "2025-04-28",
     "ubicacion": "Parque Yrigoyen, San Martín",
-    "tema": "Eventos",
+    "tema": "eventos",
     "imagenes": [
       "imagenes/festival-musica-1.jpg",
       "imagenes/festival-musica-2.jpg"

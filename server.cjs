@@ -8,6 +8,11 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+// fuera de VSC sin esto no funciona loco
+app.use('/public',express.static(path.join(__dirname,'public')));
+app.use('/Admin',express.static(path.join(__dirname,'Admin')));
+app.use('/data',express.static(path.join(__dirname,'data')));
+app.use('/imagenes',express.static(path.join(__dirname,'imagenes')));
 
 // Ruta para guardar preguntas
 app.post('/api/preguntas', (req, res) => {

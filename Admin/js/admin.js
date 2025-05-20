@@ -3,6 +3,7 @@ import {
   normalizarDireccionUSIG,
   cerrarSesion,
   normalizarRutaImagen,
+  mapTemas,
 } from './utils.js';
 
 
@@ -44,6 +45,7 @@ function actualizarNavegacion() {
 function inicializarFormularioNoticia() {
   const formNoticia = document.getElementById('formNoticia');
   if (!formNoticia) return;
+  document.getElementById('tema').innerHTML += Array.from(mapTemas.keys()).map(k => `<option value="${k}">${mapTemas.get(k)}</option>`).join('')
   const nuevoForm = formNoticia.cloneNode(true);
   formNoticia.parentNode.replaceChild(nuevoForm, formNoticia);
   nuevoForm.addEventListener('submit', guardarNoticia);
@@ -66,7 +68,7 @@ function mostrarNoticias() {
         <h3>${noticia.titulo}</h3>
         <p><strong>Descripción:</strong> ${noticia.descripcion || ''}</p>
         <p><strong>Fecha:</strong> ${noticia.fechaPublicacion || noticia.fecha || ''}</p>
-        <p><strong>Tema:</strong> ${noticia.tema || ''}</p>
+        <p><strong>Tema:</strong> ${mapTemas.get(noticia.tema) || ''}</p>
         <p>${noticia.cuerpo}</p>
     `;
 
@@ -178,7 +180,8 @@ function guardarNoticia(event) {
     : '';
   const cuerpo = document.getElementById('cuerpo').value;
   const fechaPublicacion = document.getElementById('fechaPublicacion').value;
-  const tema = document.getElementById('tema').value;
+  const temas = document.getElementById('tema');
+  const temaElegido = temas.options[temas.selectedIndex].value;
   const direccion = document.getElementById('direccion').value;
   const inputImagenes = document.getElementById('imagenes');
 
@@ -188,7 +191,7 @@ function guardarNoticia(event) {
       descripcion,
       cuerpo,
       fechaPublicacion,
-      tema,
+      tema: temaElegido,
       imagenes: imagenesFinales,
     };
     if (direccion && direccion.trim() !== '') {
@@ -301,12 +304,7 @@ function editarNoticia(indice) {
       <input type="date" id="fechaPublicacion-${indice}" name="fechaPublicacion" value="${noticia.fechaPublicacion}" required>
       <label for="tema-${indice}">Tema:</label>
       <select id="tema-${indice}" name="tema" required>
-        <option value="general" ${noticia.tema === "general" ? "selected" : ""}>General</option>
-        <option value="politica" ${noticia.tema === "politica" ? "selected" : ""}>Política</option>
-        <option value="economia" ${noticia.tema === "economia" ? "selected" : ""}>Economía</option>
-        <option value="deportes" ${noticia.tema === "deportes" ? "selected" : ""}>Deportes</option>
-        <option value="cultura" ${noticia.tema === "cultura" ? "selected" : ""}>Cultura</option>
-        <option value="tecnologia" ${noticia.tema === "tecnologia" ? "selected" : ""}>Tecnología</option>
+        ${Array.from(mapTemas.keys()).map(k => `<option value="${k}" ${noticia.tema === k ? 'selected' : ''}>${mapTemas.get(k)}</option>`).join('')}
       </select>
       <label for="direccion-${indice}">Dirección (opcional):</label>
       <input type="text" id="direccion-${indice}" name="direccion" value="${valorDireccion}">
@@ -334,7 +332,8 @@ function editarNoticia(indice) {
     const fechaPublicacion = formEditar.querySelector(
       `#fechaPublicacion-${indice}`
     ).value;
-    const tema = formEditar.querySelector(`#tema-${indice}`).value;
+    const temas = formEditar.querySelector(`#tema-${indice}`);
+    const temaElegido = temas.options[temas.selectedIndex].value;
     const direccionFormulario = formEditar.querySelector(
       `#direccion-${indice}`
     ).value;
@@ -346,7 +345,7 @@ function editarNoticia(indice) {
         descripcion,
         cuerpo,
         fechaPublicacion,
-        tema,
+        tema: temaElegido,
         imagenes: imagenesFinales,
         ubicacion: ubicacion || noticiaOriginal.ubicacion || null,
       };
