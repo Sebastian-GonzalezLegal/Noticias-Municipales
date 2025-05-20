@@ -1,13 +1,13 @@
-export const mapTemas = new Map([
-  ['obras-publicas'	,'Obras Públicas'],
-  ['medio-ambiente'	,'Medio Ambiente'],
-  ['cultura'		,'Cultura'],
-  ['deportes'		,'Deportes'],
-  ['salud'		,'Salud'],
-  ['educacion'		,'Educación'],
-  ['eventos'		,'Eventos'],
-  ['transporte'		,'Transporte'],
-]);
+export const lista_temas = [
+	'Obras Públicas',
+	'Medio Ambiente',
+	'Cultura',
+	'Deportes',
+	'Salud',
+	'Educación',
+	'Eventos',
+	'Transporte'
+];
 
 export function obtenerNoticias() {
     try {
