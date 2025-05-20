@@ -4,7 +4,7 @@ export const mapTemas = new Map([
   ['cultura'		,'Cultura'],
   ['deportes'		,'Deportes'],
   ['salud'		,'Salud'],
-  ['educación'		,'Educación'],
+  ['educacion'		,'Educación'],
   ['eventos'		,'Eventos'],
   ['transporte'		,'Transporte'],
 ]);
