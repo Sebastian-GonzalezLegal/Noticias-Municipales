@@ -48,6 +48,8 @@ function inicializarFormularioNoticia() {
   const nuevoForm = formNoticia.cloneNode(true);
   formNoticia.parentNode.replaceChild(nuevoForm, formNoticia);
   nuevoForm.addEventListener('submit', guardarNoticia);
+  const direccionInput = nuevoForm.querySelector('#direccion');
+  direccionInput.addEventListener('input',()=>{direccionInput.setCustomValidity('');});
 }
 
 function mostrarNoticias() {
@@ -229,7 +231,8 @@ function guardarNoticia(event) {
   const cuerpo = document.getElementById('cuerpo').value;
   const fechaPublicacion = document.getElementById('fechaPublicacion').value;
   const tema = lista_temas[document.getElementById('tema').selectedIndex];
-  const direccion = document.getElementById('direccion').value;
+  const direccionInput = document.getElementById('direccion');
+  const direccion = direccionInput.value;
   const inputImagenes = document.getElementById('imagenes');
 
   const continuarGuardado = (imagenesFinales) => {
@@ -249,9 +252,9 @@ function guardarNoticia(event) {
           alert('Noticia guardada correctamente');
         })
         .catch(() => {
-          noticia.ubicacion = null;
-          almacenarNoticia(noticia);
-          alert('Noticia guardada correctamente');
+          direccionInput.setCustomValidity('Dirección inexistente');
+          direccionInput.reportValidity();
+          return;
         });
     } else {
       noticia.ubicacion = null;
@@ -401,36 +404,36 @@ function inicializarAutocompletadorDireccionEdicion(indice) {
 
 function editarNoticia(indice) {
   const noticias = obtenerNoticias();
-  const noticia = noticias[indice];
+  const noticiaOriginal = noticias[indice];
   indiceEditando = indice;
 
-  let valorDireccion = '';
-  if (typeof noticia.ubicacion === 'string') {
-    valorDireccion = noticia.ubicacion;
+  let direccionOriginal = '';
+  if (typeof noticiaOriginal.ubicacion === 'string') {
+    direccionOriginal = noticiaOriginal.ubicacion;
   } else if (
-    noticia.ubicacion &&
-    typeof noticia.ubicacion === 'object' &&
-    noticia.ubicacion.direccion_normalizada
+    noticiaOriginal.ubicacion &&
+    typeof noticiaOriginal.ubicacion === 'object' &&
+    noticiaOriginal.ubicacion.direccion_normalizada
   ) {
-    valorDireccion = noticia.ubicacion.direccion_normalizada;
+    direccionOriginal = noticiaOriginal.ubicacion.direccion_normalizada;
   }
 
   const formularioHTML = `
     <form id="formNoticiaEditar-${indice}">
       <label for="titulo-${indice}">Título:</label>
-      <input type="text" id="titulo-${indice}" name="titulo" value="${noticia.titulo}" required>
+      <input type="text" id="titulo-${indice}" name="titulo" value="${noticiaOriginal.titulo}" required>
       <label for="descripcion-${indice}">Descripción breve:</label>
-      <input type="text" id="descripcion-${indice}" name="descripcion" value="${noticia.descripcion}" required>
+      <input type="text" id="descripcion-${indice}" name="descripcion" value="${noticiaOriginal.descripcion}" required>
       <label for="cuerpo-${indice}">Cuerpo de la Noticia:</label>
-      <textarea id="cuerpo-${indice}" name="cuerpo" required>${noticia.cuerpo}</textarea>
+      <textarea id="cuerpo-${indice}" name="cuerpo" required>"${noticiaOriginal.cuerpo}"</textarea>
       <label for="fechaPublicacion-${indice}">Fecha de Publicación:</label>
-      <input type="date" id="fechaPublicacion-${indice}" name="fechaPublicacion" value="${noticia.fechaPublicacion}" required>
+      <input type="date" id="fechaPublicacion-${indice}" name="fechaPublicacion" value="${noticiaOriginal.fechaPublicacion}" required>
       <label for="tema-${indice}">Tema:</label>
       <select id="tema-${indice}" name="tema" required>
-        ${lista_temas.map(k => `<option value="${k}" ${noticia.tema === k ? 'selected' : ''}>${k}</option>`).join('')}
+        ${lista_temas.map(k => `<option value="${k}" ${noticiaOriginal.tema === k ? 'selected' : ''}>${k}</option>`).join('')}
       </select>
       <label for="direccion-${indice}">Dirección (opcional):</label>
-      <input type="text" id="direccion-${indice}" name="direccion" value="${valorDireccion}">
+      <input type="text" id="direccion-${indice}" name="direccion" value="${direccionOriginal}">
       <label for="imagenes-${indice}">Imágenes (opcional):</label>
       <input type="file" id="imagenes-${indice}" name="imagenes" multiple>
       <button type="submit">Guardar Cambios</button>
@@ -450,7 +453,6 @@ function editarNoticia(indice) {
   const formEditar = document.getElementById(`formNoticiaEditar-${indice}`);
   formEditar.addEventListener('submit', function (e) {
     e.preventDefault();
-    const noticiaOriginal = noticias[indice];
     const titulo = formEditar.querySelector(`#titulo-${indice}`).value;
     const descripcion = formEditar.querySelector(`#descripcion-${indice}`).value;
     const cuerpo = formEditar.querySelector(`#cuerpo-${indice}`).value;
@@ -458,9 +460,8 @@ function editarNoticia(indice) {
       `#fechaPublicacion-${indice}`
     ).value;
     const tema = lista_temas[formEditar.querySelector(`#tema-${indice}`).selectedIndex];
-    const direccionFormulario = formEditar.querySelector(
-      `#direccion-${indice}`
-    ).value;
+    const direccionInput = formEditar.querySelector(`#direccion-${indice}`)
+    const direccion = direccionInput.value;
     const inputImagenes = formEditar.querySelector(`#imagenes-${indice}`);
 
     const guardarNoticiaFinal = (imagenesFinales, ubicacion) => {
@@ -480,24 +481,22 @@ function editarNoticia(indice) {
       mostrarNoticias();
     };
 
-    const direccionOriginal =
-      typeof noticiaOriginal.ubicacion === 'string'
-        ? noticiaOriginal.ubicacion
-        : noticiaOriginal.ubicacion?.direccion_normalizada || '';
-
     if (
-      direccionFormulario &&
-      direccionFormulario.trim() !== '' &&
-      direccionFormulario !== direccionOriginal
+      direccion &&
+      direccion.trim() !== '' &&
+      direccion !== direccionOriginal
     ) {
-      normalizarDireccionUSIG(direccionFormulario)
+      normalizarDireccionUSIG(direccion)
         .then((ubicacionNormalizada) => {
           procesarImagenes(inputImagenes, noticiaOriginal).then((imagenesFinales) => {
             guardarNoticiaFinal(imagenesFinales, ubicacionNormalizada);
           });
         })
         .catch(() => {
-          alert('No se pudo normalizar la dirección. Por favor revisá que sea válida.');
+          direccionInput.setCustomValidity('Dirección inexistente');
+          direccionInput.reportValidity();
+          direccionInput.addEventListener('input',() => {direccionInput.setCustomValidity('');});
+          return;
         });
     } else {
       procesarImagenes(inputImagenes, noticiaOriginal).then((imagenesFinales) => {
