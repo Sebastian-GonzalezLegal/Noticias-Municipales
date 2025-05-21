@@ -19,30 +19,35 @@ function mostrarPreguntas() {
                 return;
             }
 
-            let html = "";
+            lista.innerHTML = ""; // Limpiamos antes de insertar
+
             preguntas.forEach((pregunta, index) => {
-                html += `<div class="pregunta">
-                <p><strong>Noticia:</strong> ${pregunta.idNoticia ?? 'N/A'}</p>
-                <p><strong>Pregunta:</strong> ${pregunta.mensaje}</p>
-                <p><strong>Estado:</strong> ${pregunta.estado ?? 'pendiente'}</p>
-                <p><small>${pregunta.fecha}</small></p>
-                ${pregunta.estado === "Respondida" ?
+                const card = document.createElement("div");
+                card.className = "pregunta-card";
+
+                card.innerHTML = `
+                    <div class="pregunta-header">
+                        <strong>Noticia:</strong> ${pregunta.idNoticia ?? 'N/A'}
+                        <span class="fecha">${pregunta.fecha}</span>
+                    </div>
+                    <p class="pregunta-texto">${pregunta.mensaje}</p>
+                    <p><strong>Estado:</strong> ${pregunta.estado ?? 'Pendiente'}</p>
+                    ${pregunta.estado === "Respondida" || pregunta.estado === "Rechazada" ?
                         `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
-                    <p><small>${pregunta.fechaRespuesta}</small></p>
-                    <button onclick="eliminarPregunta(${index})">Eliminar</button>`
-                        : pregunta.estado === "Rechazada" ?
-                            `<p><strong>Respuesta:</strong> ${pregunta.respuesta}</p>
-                    <p><small>${pregunta.fechaRespuesta}</small></p>
-                    <button onclick="eliminarPregunta(${index})">Eliminar</button>`
-                            :
-                            `<input type="text" id="respuesta_${index}" placeholder="Ingrese respuesta">
-                    <button onclick="responderPregunta(${index})">Responder</button>
-                    <button onclick="rechazarPregunta(${index})">Rechazar</button>`
+                         <p><small>${pregunta.fechaRespuesta}</small></p>
+                         <div class="pregunta-acciones">
+                            <button class="btn-rechazar" onclick="eliminarPregunta(${index})">Eliminar</button>
+                         </div>`
+                        :
+                        `<input type="text" id="respuesta_${index}" placeholder="Ingrese respuesta" class="input-respuesta">
+                         <div class="pregunta-acciones">
+                            <button class="btn-aprobar" onclick="responderPregunta(${index})">Responder</button>
+                            <button class="btn-rechazar" onclick="rechazarPregunta(${index})">Rechazar</button>
+                         </div>`
                     }
-                <hr>
-            </div>`;
+                `;
+                lista.appendChild(card);
             });
-            lista.innerHTML = html;
         })
         .catch(error => {
             console.error('Error al obtener las preguntas:', error);

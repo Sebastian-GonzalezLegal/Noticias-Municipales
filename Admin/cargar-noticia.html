@@ -1,4 +1,3 @@
-<!-- cargar-noticia.html -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,7 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
-<body>
+<body class="bodyCargarNoticia">
   <header class="headerAdmin">
     <h1>Panel de Administración</h1>
     <nav class="navbar">
@@ -23,52 +22,56 @@
     </nav>
   </header>
 
-  <main>
-    <form id="formNoticia">
-      <div class="form-group">
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" required>
-      </div>
-
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" rows="2"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="cuerpo">Cuerpo:</label>
-        <textarea id="cuerpo" rows="6" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="fechaPublicacion">Fecha de publicación:</label>
-        <input type="date" id="fechaPublicacion">
-      </div>
-
-      <div class="form-group">
-        <label for="tema">Tema:</label>
-        <select id="tema"></select>
-      </div>
-
-      <div class="form-group">
-        <label for="direccion">Dirección:</label>
-          <input type="text" id="direccion" placeholder="Ej: Av. San Martín 4500">
-          <button type="button" id="btnVerMapa">
-            Ver en Mapa
-          </button>
+  <main class="mainCargarNoticia">
+    <section class="form-wrapper">
+      <h2>Crear Nueva Noticia</h2>
+      <form id="formNoticia" class="noticia-form">
+        <div class="form-group">
+          <label for="titulo">Título:</label>
+          <input type="text" id="titulo" required placeholder="Ingrese el título">
         </div>
-        <div id="mapa"></div>
-      </div>
 
-      <div class="form-group">
-        <label for="imagenes">Imágenes:</label>
-        <input type="file" id="imagenes" multiple accept="image/*">
-        <small>Puede seleccionar múltiples imágenes</small>
-        <div id="imagenes-existentes"></div>
-      </div>
+        <div class="form-group">
+          <label for="descripcion">Descripción breve:</label>
+          <textarea id="descripcion" rows="2" placeholder="Resumen de la noticia..."></textarea>
+        </div>
 
-      <button type="submit" class="btn">Guardar Noticia</button>
-    </form>
+        <div class="form-group">
+          <label for="cuerpo">Cuerpo de la noticia:</label>
+          <textarea id="cuerpo" rows="6" required placeholder="Escriba el contenido principal aquí..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaPublicacion">Fecha de publicación:</label>
+          <input type="date" id="fechaPublicacion">
+        </div>
+
+        <div class="form-group">
+          <label for="tema">Tema:</label>
+          <select id="tema">
+            <option value="">Seleccione un tema</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="direccion">Dirección relacionada:</label>
+          <div class="direccion-mapa">
+            <input type="text" id="direccion" placeholder="Ej: Av. San Martín 4500">
+            <button type="button" id="btnVerMapa" class="btn-mapa">Ver en Mapa</button>
+          </div>
+          <div id="mapa" class="mapa-preview"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="imagenes">Imágenes:</label>
+          <input type="file" id="imagenes" multiple accept="image/*">
+          <small class="form-hint">Puede seleccionar múltiples imágenes</small>
+          <div id="imagenes-existentes" class="imagenes-previas"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Noticia</button>
+      </form>
+    </section>
   </main>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

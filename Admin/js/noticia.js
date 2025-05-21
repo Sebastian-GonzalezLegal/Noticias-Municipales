@@ -120,7 +120,7 @@ function mostrarListaNoticias(noticias, contenedor) {
       contenidoHTML += `<div class="galeria-imagenes">`;
       noticia.imagenes.forEach((imagen) => {
         const rutaImagen = normalizarRutaImagen(imagen);
-        contenidoHTML += `<img class="news-image" src="${rutaImagen}" alt="${noticia.titulo}">`;
+        contenidoHTML += `<img class="news-image" src="${rutaImagen}" alt="Imagen de ${noticia.titulo}" title="Imagen de ${noticia.titulo}">`;
       });
       contenidoHTML += `</div>`;
     }
@@ -334,3 +334,13 @@ function mostrarDetalleNoticia() {
       '<p>Error al mostrar la noticia. Volvé a la <a href="index.html">página principal</a>.</p>';
   }
 }
+
+contenedorMapa.style.display = 'block';
+contenedorMapa.style.opacity = 1;
+contenedorMapa.style.height = '250px';
+
+contenedorMapa.style.opacity = 0;
+setTimeout(() => {
+  contenedorMapa.style.display = 'none';
+  contenedorMapa.style.height = '0';
+}, 300);

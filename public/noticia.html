@@ -9,19 +9,19 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
-<body>
-  <header>
+<body class="bodyNoticia">
+  <header class="headerNoticia">
     <h1>Detalle de Noticia</h1>
     <button id="volver" onclick="window.location.href='index.html'">Volver</button>
   </header>
 
-  <main>
+  <main class="mainNoticia">
     <article id="detalleNoticia">
-      <!-- Aquí se muestra el detalle de la noticia -->
+
     </article>
     <section id="preguntas">
       <h2>¿Tenés alguna pregunta sobre esta noticia?</h2>
-      <form id="formPregunta">
+      <form id="formPregunta" class="formPregunta">
         <label for="pregunta">Escribí tu pregunta:</label><br />
         <textarea id="pregunta" name="pregunta" rows="4" cols="50" required></textarea><br />
         <button type="submit">Enviar pregunta</button>

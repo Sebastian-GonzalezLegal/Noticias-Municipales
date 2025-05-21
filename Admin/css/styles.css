@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
@@ -6,24 +14,103 @@ body {
   background-color: #f5f5f5;
 }
 
+.bodyPanel {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+}
+
+
+.bodyNoticia {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.bodyCargarNoticia {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+.bodyPreguntas{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
 header {
-  background: #004080;
   color: white;
-  padding: 10px 20px;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.headerNoticia {
+  background-color: #1e3a8a;
+  color: #fff;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.headerNoticia h1 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+.headerNoticia button {
+  background-color: #3b82f6; /* azul brillante */
+  border: none;
+  padding: 10px 18px;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+}
+
+.headerNotica button:hover {
+  background-color: #2563eb;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.6);
+}
+
+.mainNoticia {
+  flex-grow: 1;
+  max-width: 900px;
+  margin: 30px auto 60px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.mainCargarNoticia{
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 nav a {
   color: white;
   text-decoration: none;
-  margin: 0 10px;
-  font-weight: bold;
-}
-
-main {
-  margin: 20px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 form {
@@ -68,11 +155,15 @@ nav a:hover {
 }
 
 footer {
-  background-color: #004080;
-  color: white;
+  background-color: #1e3a8a;
+  color: #f3f4f6;
   text-align: center;
-  padding: 10px;
-  margin-top: 40px;
+  padding: 15px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: auto;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
 }
 
 header h1 {
@@ -172,11 +263,20 @@ section h2 {
 }
 
 article#detalleNoticia {
-  padding: 20px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.7;
+  transition: box-shadow 0.3s ease;
 }
+
+#detalleNoticia:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
 
 .header-buttons button {
   margin: 0 5px;
@@ -187,9 +287,6 @@ article#detalleNoticia {
   cursor: pointer;
 }
 
-main {
-  margin: 20px;
-}
 
 section {
   background: white;
@@ -224,24 +321,85 @@ form button {
 }
 
 .contenedor-mapa {
-  height: 300px;
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+    height: 250px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-#listaNoticias .noticia {
-  border-bottom: 1px solid #eee;
+#noticiaAdmin {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-#listaNoticias .noticia:last-child {
+#noticiasAdmin h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.listaNoticias {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+
+.listaNoticias .noticia {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.listaNoticias .noticia:hover {
+    transform: translateY(-3px);
+}
+
+.listaNoticias .noticia:last-child {
   border-bottom: none;
 }
 
-#listaNoticias .noticia button {
+.listaNoticias .noticia button {
   margin-right: 5px;
 }
 
+.listaNoticias .noticia h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #003366;
+}
+
+.listaNoticias .noticia p {
+    margin: 0.4rem 0;
+    line-height: 1.4;
+}
+
+.listaNoticias .noticia img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+.listaNoticias .noticia button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.listaNoticias .noticia button:hover {
+    background-color: #0056b3;
+}
 .header-buttons {
   display: flex;
   gap: 10px;
@@ -305,17 +463,26 @@ main {
   margin-top: 15px;
 }
 
+.btn,
 .btn-mapa {
-  background-color: #27ae60;
-  color: white;
+  padding: 0.75rem 1.25rem;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  border-radius: 6px;
+  background-color: #1976d2;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
+.btn:hover,
 .btn-mapa:hover {
-  background-color: #219653;
+  background-color: #1565c0;
+}
+
+.btn-primary {
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .contenedor-mapa {
@@ -365,11 +532,18 @@ form button {
 }
 
 #map {
-  height: 300px;
-  margin-top: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  height: 320px;
+  margin-top: 30px;
+  border-radius: 12px;
+  border: 2px solid #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
+
+#map:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
 
 .login-container {
   max-width: 400px;
@@ -403,6 +577,17 @@ form button {
 
 .headerAdmin {
   background-color: #2c3e50;
+  color: white;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.headerAdmin h1 {
+    margin: 0;
+    font-size: 1.8rem;
 }
 
 .acciones {
@@ -414,34 +599,50 @@ form button {
 }
 
 .navbar {
-  color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   position: relative;
 }
 
 .nav-brand {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 .nav-toggle {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   background: none;
   border: none;
   color: white;
-  display: none;
   cursor: pointer;
+  display: none;
 }
 
 .nav-links {
   display: flex;
+  gap: 1rem;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
 }
 
-.nav-links a {
+.nav-links button{
   color: white;
   text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-links button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 /* Responsive */
@@ -453,22 +654,47 @@ form button {
   .nav-links {
     flex-direction: column;
     position: absolute;
-    top: 80px;
-    right: 0;
-    background-color: #1b354f;
-    border-radius: 5%;
-    display: none;
+    top: 70px;
+    right: 10px;
+    background: #2c3e50;
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+    width: 85vw;
+    max-width: 320px;
+    overflow: hidden;
+
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1000;
   }
 
   .nav-links.show {
-    display: flex;
+    max-height: 600px;
+    opacity: 1;
+    padding: 1rem;
+    pointer-events: auto;
   }
 
-  .nav-links a {
-    padding: 0.5rem;
-    border-top: 1px solid #1b354f;
+.nav-links button{
+    padding: 12px 16px;
+    width: 100%;
+    display: block;
+    text-align: left;
+    font-size: 1.1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .nav-links button:first-child {
+    border-top: none;
+  }
+
+  nav a:first-child {
+    border-top: none;
   }
 }
+
 
 .btnAdmin {
   background-color: #2c3e50;
@@ -495,6 +721,74 @@ form button {
 
 #preguntas {
   display: none;
+  background-color: #fff;
+  margin-top: 40px;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+#preguntas h2 {
+  color: #1e3a8a;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 8px;
+}
+
+.formPregunta {
+  display: flex;
+  flex-direction: column;
+}
+
+.formPregunta label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.formPregunta textarea {
+  height: 150px;    
+  max-width: 100%;
+  max-height: 200px;
+  resize: none;
+  overflow: auto;
+}
+
+.formPregunta textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+.formPregunta button {
+  align-self: flex-start;
+  background-color: #3b82f6;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formPregunta button:hover {
+  background-color: #2563eb;
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.6);
+}
+
+#mensajeConfirmacion {
+  margin-top: 15px;
+  font-weight: 600;
+  color: #16a34a;
+  min-height: 20px;
+  font-size: 1rem;
 }
 
 .editar {
@@ -502,10 +796,167 @@ form button {
 }
 
 #direccion {
-  width: 100%;
-  padding: 5px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 #mapa {
-  margin-top: 20px;
+  margin-top: 1rem;
+  height: 300px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  .headerNotica {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerNotica h1 {
+    margin-bottom: 10px;
+  }
+
+  .mainNoticia {
+    padding: 0 10px;
+  }
+
+  .formPregunta button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+hr {
+  display: none;
+}
+
+@media (max-width: 768px) {
+    .listaNoticias {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.form-wrapper h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-wrapper label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-hint {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.form-wrapper input[type="text"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.imagenes-previas {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#listaPreguntas {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.pregunta-card {
+    background: #fff;
+    border-left: 5px solid #007bff;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+}
+
+.pregunta-card:hover {
+    transform: scale(1.01);
+}
+
+.pregunta-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.pregunta-texto {
+    font-size: 1.1rem;
+    margin: 0.8rem 0;
+}
+
+.input-respuesta {
+    width: 100%;
+    padding: 0.4rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.pregunta-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.pregunta-acciones button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #fff;
+    transition: background 0.2s;
+}
+
+.btn-aprobar {
+    background-color: #28a745;
+}
+
+.btn-aprobar:hover {
+    background-color: #218838;
+}
+
+.btn-rechazar {
+    background-color: #dc3545;
+}
+
+.btn-rechazar:hover {
+    background-color: #c82333;
 }

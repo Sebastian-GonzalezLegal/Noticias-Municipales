@@ -106,7 +106,7 @@ function mostrarNoticias() {
           >
             <h4>Ubicación</h4>
             <div id="map-${indice}" style="height: 400px;"></div>
-            <button onclick="ocultarMapa(${indice})">Ocultar mapa</button>
+            <button onclick="ocultarMapa(${indice})" style="margin-top: 10px;">Ocultar mapa</button>
           </div>
         </div>
       `;
@@ -434,6 +434,7 @@ function editarNoticia(indice) {
       </select>
       <label for="direccion-${indice}">Dirección (opcional):</label>
       <input type="text" id="direccion-${indice}" name="direccion" value="${direccionOriginal}">
+      <button type="button" id="btnVerMapa-editar-${indice}" style="margin-left:8px; display:none;" disabled="">Ver en Mapa</button>
       <label for="imagenes-${indice}">Imágenes (opcional):</label>
       <input type="file" id="imagenes-${indice}" name="imagenes" multiple>
       <button type="submit">Guardar Cambios</button>
@@ -576,6 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 window.verificarAdmin = verificarAdmin;
 window.editarNoticia = editarNoticia;
