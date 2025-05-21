@@ -1,75 +1,85 @@
+<!-- cargar-noticia.html -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Crear Noticia - Admin</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+  <meta charset="UTF-8">
+  <title>Crear Noticia - Admin</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
-<header class="headerAdmin">
-    <h1>Panel de Administración</h1>
-    <nav class="navbar">
-        <div class="nav-brand"></div>
-        <a href="panel.html">Volver al Panel</a>
-        <a href="/public/index.html">Volver al Portal</a>
-        <button class="nav-toggle" id="nav-toggle-admin">☰</button>
-        <div class="nav-links" id="navAdmin">
-            <button class="btnAdmin" onclick="window.location.href='moderar-preguntas.html'">Gestionar Preguntas de
-                Usuarios</button>
-            <button class="btnAdmin" onclick="cerrarSesion()">Cerrar sesión</button>
-        </div>
-    </nav>
-</header>
 
 <body>
+  <header class="headerAdmin">
+    <h1>Panel de Administración</h1>
+    <nav class="navbar">
+      <a href="panel.html">Volver al Panel</a>
+      <a href="/public/index.html">Volver al Portal</a>
+      <button class="nav-toggle" id="nav-toggle-admin">☰</button>
+      <div class="nav-links" id="navAdmin">
+        <button class="btnAdmin" onclick="window.location.href='moderar-preguntas.html'">Gestionar Preguntas</button>
+        <button class="btnAdmin" onclick="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </nav>
+  </header>
 
-    <main>
-        <form id="formNoticia">
-            <div class="form-group">
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" required>
-            </div>
+  <main>
+    <form id="formNoticia">
+      <div class="form-group">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" required>
+      </div>
 
-            <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" rows="2"></textarea>
-            </div>
+      <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" rows="2"></textarea>
+      </div>
 
-            <div class="form-group">
-                <label for="cuerpo">Cuerpo de la noticia:</label>
-                <textarea id="cuerpo" rows="6" required></textarea>
-            </div>
+      <div class="form-group">
+        <label for="cuerpo">Cuerpo:</label>
+        <textarea id="cuerpo" rows="6" required></textarea>
+      </div>
 
-            <div class="form-group">
-                <label for="fechaPublicacion">Fecha de publicación:</label>
-                <input type="date" id="fechaPublicacion">
-            </div>
+      <div class="form-group">
+        <label for="fechaPublicacion">Fecha de publicación:</label>
+        <input type="date" id="fechaPublicacion">
+      </div>
 
-            <div class="form-group">
-                <label for="tema">Tema:</label>
-                <select id="tema">
-                </select>
-            </div>
+      <div class="form-group">
+        <label for="tema">Tema:</label>
+        <select id="tema"></select>
+      </div>
 
-            <div class="form-group">
-                <label for="direccion">Dirección:</label>
-                <input type="text" id="direccion" placeholder="Ej: Av. San Martín 4500, San Martín">
-            </div>
+      <div class="form-group">
+        <label for="direccion">Dirección:</label>
+          <input type="text" id="direccion" placeholder="Ej: Av. San Martín 4500">
+          <button type="button" id="btnVerMapa">
+            Ver en Mapa
+          </button>
+        </div>
+        <div id="mapa"></div>
+      </div>
 
-            <div class="form-group">
-                <label for="imagenes">Imágenes:</label>
-                <input type="file" id="imagenes" multiple accept="image/*">
-                <small>Puede seleccionar múltiples imágenes</small>
-                <div id="imagenes-existentes"></div>
-            </div>
+      <div class="form-group">
+        <label for="imagenes">Imágenes:</label>
+        <input type="file" id="imagenes" multiple accept="image/*">
+        <small>Puede seleccionar múltiples imágenes</small>
+        <div id="imagenes-existentes"></div>
+      </div>
 
-            <button type="submit" class="btn">Guardar Noticia</button>
-        </form>
-        <div id="map"></div>
-    </main>
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script type="module" src="js/admin.js"></script>
+      <button type="submit" class="btn">Guardar Noticia</button>
+    </form>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="js/usig/usig.AutoCompleterFull.min.js"></script>
+  <script src="js/usig/usig.SuggesterCatastro.min.js"></script>
+  <script src="js/usig/usig.MapaEstatico.min.js"></script>
+  <script src="js/usig/usig.Coords.min.js"></script>
+  <script src="js/usig/usig.MostrarDireccionesSugeridas.js"></script>
+
+  <script type="module" src="js/admin.js"></script>
 </body>
 
 </html>

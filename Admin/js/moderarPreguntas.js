@@ -58,7 +58,7 @@ function responderPregunta(index) {
     }
 
     fetch(`http://localhost:3000/api/preguntas/${index}`, {
-        method: 'PUT', // Utiliza PUT para actualizar la pregunta
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },

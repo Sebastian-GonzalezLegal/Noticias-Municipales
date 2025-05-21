@@ -6,7 +6,6 @@ import {
   lista_temas,
 } from './utils.js';
 
-
 let indiceEditando = null;
 
 function verificarAdmin() {
@@ -169,7 +168,56 @@ document.addEventListener('DOMContentLoaded', async function () {
   mostrarNoticias();
   actualizarNavegacion();
   inicializarFormularioNoticia();
+  inicializarAutocompletadorDireccion();
 });
+
+function inicializarAutocompletadorDireccion() {
+  const input = $('#direccion');
+  if (input.length === 0) return; // <-- Agregá este chequeo
+
+  const btnMapa = $('#btnVerMapa');
+  const mapaCont = $('#mapa');
+
+  input.val('Cargando…').prop('disabled', true);
+  btnMapa.prop('disabled', true);
+
+  function afterGeoCoding(pt) {
+    const img = usig.MapaEstatico({
+      x: pt.getX(),
+      y: pt.getY(),
+      marcarPunto: 1,
+      width: 600,
+      desc: input.val()
+    });
+    mapaCont.text('Cargando mapa…');
+    img.onload = () => {
+      mapaCont.empty().append(img);
+    };
+  }
+  const ac = new usig.AutoCompleter('direccion', {
+    debug: false,
+    rootUrl: 'https://servicios.usig.buenosaires.gob.ar/usig-js/2.0/',
+    useInventario: true,
+    onReady() {
+      input.val('').prop('disabled', false).focus();
+    },
+    afterSelection(option) {
+      ac.selectedOption = option;
+      btnMapa.prop('disabled', false);
+    }
+  });
+
+  ac.addSuggester('DireccionesAMBA', {
+    inputPause: 500,
+    minTextLength: 3
+  });
+
+  btnMapa.click(() => {
+    if (!ac.selectedOption) return;
+    mapaCont.text('Buscando coordenadas…');
+    ac.geocode(ac.selectedOption, afterGeoCoding);
+  });
+}
 
 function guardarNoticia(event) {
   event.preventDefault();
@@ -275,6 +323,82 @@ function ocultarMapa(indice) {
   contenedorMapa.style.display = 'none';
 }
 
+function inicializarAutocompletadorDireccionEdicion(indice) {
+  const input = $(`#direccion-${indice}`);
+  if ($(`#btnVerMapa-editar-${indice}`).length === 0) {
+    input.after(`<button type="button" id="btnVerMapa-editar-${indice}" style="margin-left:8px;">Ver en Mapa</button>`);
+  }
+  if ($(`#mapa-editar-${indice}`).length === 0) {
+    input.parent().append(`<div id="mapa-editar-${indice}" style="margin-top:10px;"></div>`);
+  }
+  const btnMapa = $(`#btnVerMapa-editar-${indice}`);
+  const mapaCont = $(`#mapa-editar-${indice}`);
+
+  btnMapa.prop('disabled', true);
+
+  function afterGeoCoding(pt, direccion) {
+    mapaCont.empty();
+    if ($(`#mapa-leaflet-editar-${indice}`).length === 0) {
+      mapaCont.append(`<div id="mapa-leaflet-editar-${indice}" style="height: 400px; width: 100%;"></div>`);
+    }
+    if (window[`_leafletMapEditar${indice}`]) {
+      window[`_leafletMapEditar${indice}`].remove();
+    }
+    window[`_leafletMapEditar${indice}`] = L.map(`mapa-leaflet-editar-${indice}`).setView([pt.getY(), pt.getX()], 17);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(window[`_leafletMapEditar${indice}`]);
+    L.marker([pt.getY(), pt.getX()])
+      .addTo(window[`_leafletMapEditar${indice}`])
+      .bindPopup(direccion ? String(direccion) : '')
+      .openPopup();
+  }
+
+  const ac = new usig.AutoCompleter(`direccion-${indice}`, {
+    debug: false,
+    useInventario: true,
+    onReady() {
+      input.prop('disabled', false).focus();
+    },
+    afterSelection(option) {
+      ac.selectedOption = option;
+      btnMapa.prop('disabled', false);
+    }
+  });
+
+  ac.addSuggester('DireccionesAMBA', { inputPause: 500, minTextLength: 3 });
+
+  btnMapa.click(function () {
+    if (ac.selectedOption) {
+      mapaCont.text('Buscando coordenadas…');
+      const url = 'https://servicios.usig.buenosaires.gob.ar/normalizar?direccion=' +
+        encodeURIComponent(ac.selectedOption);
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.direccionesNormalizadas && data.direccionesNormalizadas.length > 0) {
+            const dirObj = data.direccionesNormalizadas[0];
+            if (dirObj.coordenadas && dirObj.coordenadas.x != null && dirObj.coordenadas.y != null) {
+              const pt = {
+                getX: () => Number(dirObj.coordenadas.x),
+                getY: () => Number(dirObj.coordenadas.y)
+              };
+              afterGeoCoding(pt, ac.selectedOption);
+            } else {
+              mapaCont.text('No se encontraron coordenadas para esta dirección');
+            }
+          } else {
+            mapaCont.text('No se encontraron coordenadas para esta dirección');
+          }
+        })
+        .catch(error => {
+          console.error('Error al geocodificar:', error);
+          mapaCont.text('Error al buscar las coordenadas');
+        });
+    }
+  });
+}
+
 function editarNoticia(indice) {
   const noticias = obtenerNoticias();
   const noticia = noticias[indice];
@@ -320,6 +444,8 @@ function editarNoticia(indice) {
       <div id="map-${indice}" style="width: 100%; height: 100%;"></div>
     </div>
   `;
+
+  inicializarAutocompletadorDireccionEdicion(indice);
 
   const formEditar = document.getElementById(`formNoticiaEditar-${indice}`);
   formEditar.addEventListener('submit', function (e) {
