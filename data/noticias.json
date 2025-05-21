@@ -4,7 +4,7 @@
     "descripcion": "Nuevo espacio verde para toda la comunidad",
     "cuerpo": "El municipio inauguró un nuevo espacio verde de 5 hectáreas con juegos infantiles, canchas deportivas y áreas de descanso. El proyecto incluye iluminación LED y sistema de riego automático.",
     "fecha": "2025-05-20",
-    "ubicacion": "Av. San Martín 4500, San Martín",
+    "ubicacion": "122 - General Roca 3201, Villa Ballester",
     "tema": "Obras Públicas",
     "imagenes": [
       "imagenes/parque-inaguracion-1.jpg",
@@ -16,7 +16,7 @@
     "descripcion": "Cine argentino para toda la familia",
     "cuerpo": "Durante todo el mes de junio se proyectarán películas argentinas clásicas y contemporáneas. Las funciones son gratuitas y se realizarán los fines de semana en el centro cultural municipal.",
     "fecha": "2025-05-18",
-    "ubicacion": "Intendente Campos 2089, San Martín",
+    "ubicacion":"89 - Intendente A. M. Campos Y 54 - Mitre, General San Martín",
     "tema": "Cultura",
     "imagenes": [
       "imagenes/cine-centro-cultural.jpg"
@@ -27,7 +27,6 @@
     "descripcion": "Mejora en el sistema de reciclaje municipal",
     "cuerpo": "A partir del próximo mes, se implementará un nuevo sistema de recolección diferenciada en todos los barrios del municipio. Los vecinos recibirán contenedores especiales para separar los residuos.",
     "fecha": "2025-05-15",
-    "ubicacion": "San Martín",
     "tema": "Medio Ambiente",
     "imagenes": [
       "imagenes/contenedores-reciclaje.jpg",
@@ -39,7 +38,7 @@
     "descripcion": "Celebración de la gastronomía local",
     "cuerpo": "Los mejores chefs locales se reunirán para ofrecer sus especialidades. Habrá talleres de cocina, degustaciones y música en vivo en la plaza principal del municipio.",
     "fecha": "2025-05-12",
-    "ubicacion": "Plaza Central, San Martín",
+    "ubicacion": "54 - Mitre Y Civitanova Marche, General San Martín",
     "tema": "Eventos",
     "imagenes": [
       "imagenes/festival-gastronomico-1.jpg",
@@ -51,7 +50,6 @@
     "descripcion": "Modernización del transporte local",
     "cuerpo": "Se anunciaron nuevas líneas de colectivos locales y mejoras en la frecuencia de los servicios existentes. También se implementará un sistema de pago electrónico en todas las unidades.",
     "fecha": "2025-05-10",
-    "ubicacion": "San Martín",
     "tema": "Transporte",
     "imagenes": [
       "imagenes/colectivo-nuevo.jpg"
@@ -62,7 +60,7 @@
     "descripcion": "Muestra de artistas emergentes del municipio",
     "cuerpo": "Se inaugura una muestra con obras de artistas locales emergentes. La exposición estará abierta al público durante tres meses en el museo municipal.",
     "fecha": "2025-05-08",
-    "ubicacion": "Av. San Martín 350, San Martín",
+    "ubicacion": "54 - Mitre 3759, General San Martín",
     "tema": "Cultura",
     "imagenes": [
       "imagenes/exposicion-arte-1.jpg",
@@ -86,7 +84,6 @@
     "descripcion": "Refuerzo educativo para estudiantes locales",
     "cuerpo": "Se lanza un nuevo programa de apoyo escolar para estudiantes de primaria y secundaria. Las clases se dictarán en las bibliotecas públicas del municipio.",
     "fecha": "2025-05-03",
-    "ubicacion": "San Martín",
     "tema": "Educación",
     "imagenes": [
       "imagenes/apoyo-escolar.jpg"
@@ -97,7 +94,7 @@
     "descripcion": "Mejoras en el espacio público más importante",
     "cuerpo": "Comienzan las obras de restauración y mejoras en la plaza principal del municipio. Se incluirá nuevo sistema de iluminación y áreas verdes.",
     "fecha": "2025-05-01",
-    "ubicacion": "Plaza Central, San Martín",
+    "ubicacion":"54 - Mitre Y Civitanova Marche, General San Martín",
     "tema": "Obras Públicas",
     "imagenes": [
       "imagenes/plaza-renovacion-1.jpg",
@@ -109,7 +106,7 @@
     "descripcion": "Celebración musical para toda la comunidad",
     "cuerpo": "Se realizará un festival de música con bandas locales. Habrá food trucks y actividades para toda la familia en el parque principal del municipio.",
     "fecha": "2025-04-28",
-    "ubicacion": "Parque Yrigoyen, San Martín",
+    "ubicacion": "Bacon y Paz, Gral. Av.",
     "tema": "Eventos",
     "imagenes": [
       "imagenes/festival-musica-1.jpg",
