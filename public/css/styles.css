@@ -350,7 +350,7 @@ article#detalleNoticia {
   .nav-links.show {
     max-height: 600px;
     opacity: 1;
-    padding: 1rem;
+    padding: 0.5rem;
     pointer-events: auto;
   }
 
@@ -423,4 +423,14 @@ article#detalleNoticia {
     #contenedorNoticias {
         grid-template-columns: 1fr;
     }
+
+    .login-container, .register-container {
+      width: 70%;
+    }
+}
+
+@media (max-width: 1100px) {
+    .galeria-imagenes {
+    flex-wrap: nowrap !important;
+  }
 }

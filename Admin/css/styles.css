@@ -673,7 +673,7 @@ nav a:hover {
   .nav-links.show {
     max-height: 600px;
     opacity: 1;
-    padding: 1rem;
+    padding: 0.5rem;
     pointer-events: auto;
   }
 
@@ -816,6 +816,10 @@ nav a:hover {
 
   .headerNotica h1 {
     margin-bottom: 10px;
+  }
+
+  .headerAdmin h1 {
+    font-size: 1.2em;
   }
 
   .mainNoticia {
