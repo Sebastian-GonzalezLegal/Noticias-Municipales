@@ -335,12 +335,3 @@ function mostrarDetalleNoticia() {
   }
 }
 
-contenedorMapa.style.display = 'block';
-contenedorMapa.style.opacity = 1;
-contenedorMapa.style.height = '250px';
-
-contenedorMapa.style.opacity = 0;
-setTimeout(() => {
-  contenedorMapa.style.display = 'none';
-  contenedorMapa.style.height = '0';
-}, 300);
