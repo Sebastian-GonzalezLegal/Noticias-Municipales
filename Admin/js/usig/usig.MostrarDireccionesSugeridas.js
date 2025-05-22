@@ -1,9 +1,7 @@
 $(function () {
   function afterGeoCoding(pt, direccion) {
-    // Limpia el contenedor
     $('#mapa').empty();
 
-    // Crea un div para el mapa si no existe
     if ($('#mapa-leaflet').length === 0) {
       $('#mapa').append('<div id="mapa-leaflet" style="height: 400px; width: 100%;"></div>');
     }
@@ -29,7 +27,8 @@ $(function () {
     debug: false,
     useInventario: true,
     onReady() {
-      $('#direccion').val('').prop('disabled', false).focus();
+      $('#direccion').val('').prop('disabled', false);
+      $('#titulo').focus();
     },
     afterSelection(option) {
       ac.selectedOption = option;
