@@ -28,7 +28,7 @@ $(function () {
     useInventario: true,
     onReady() {
       $('#direccion').val('').prop('disabled', false);
-      $('#titulo').focus();
+      setTimeout(() => { $('#titulo').focus(); }, 100);
     },
     afterSelection(option) {
       ac.selectedOption = option;
@@ -37,6 +37,11 @@ $(function () {
   });
 
   ac.addSuggester('DireccionesAMBA', { inputPause: 500, minTextLength: 3 });
+
+  // Prevenir scroll al hacer clic en el área blanca de la sugerencia
+  $(document).on('mousedown', '.usig-sugerencias', function(e) {
+    e.preventDefault();
+  });
 
   $('#btnVerMapa').click(function () {
     if (ac.selectedOption) {
